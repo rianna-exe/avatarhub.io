@@ -1,0 +1,180 @@
+:root {
+  --orange: #dc8c24;
+  --yellow: #fcdc7b;
+  --brown: #5c3026;
+  --blue: #7094b7;
+  --cream: #c6b3b0;
+  --grey: #3c3c44;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--cream);
+  font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
+  color: var(--grey);
+}
+
+/* ===== NAVBAR ===== */
+nav {
+  background-color: var(--brown);
+  color: var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 15px;
+  flex-wrap: wrap;
+  font-weight: 500;
+}
+
+#title {
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--yellow);
+  letter-spacing: 2px;
+  margin-left: 20px;
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70vw;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: var(--yellow);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 1.2rem;
+}
+
+.links a:hover {
+  color: var(--orange);
+}
+
+.dropdown-content{
+    display: none;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://c4.wallpaperflare.com/wallpaper/617/455/618/avatar-the-last-airbender-wallpaper-preview.jpg");
+  background-repeat: no-repeat;  
+  background-size: cover;
+  background-position: center;
+  min-height: 60vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 3rem 2rem;
+  border-bottom: 4px solid var(--orange);
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  color: var(--brown);
+  margin-bottom: 2rem;
+  max-width: 800px;
+}
+
+#play-btn {
+  background-color: var(--orange);
+  color: var(--cream);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 0 var(--brown);
+}
+
+#play-btn:hover {
+  background-color: var(--yellow);
+  color: var(--brown);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 var(--brown);
+}
+
+#play-btn:active {
+  transform: translateY(4px);
+  box-shadow: 0 2px 0 var(--brown);
+}
+
+/* ===== CHARACTER CARDS SECTION ===== */
+.character-cards {
+  padding: 3rem 2rem;
+  background-color: var(--cream);
+  min-height: 300px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+/* Placeholder when no cards selected */
+.character-cards:empty::before {
+  content: "✨ Select a nation to see characters ✨";
+  text-align: center;
+  width: 100%;
+  color: var(--grey);
+  font-size: 1rem;
+  opacity: 0.7;
+  font-style: italic;
+  padding: 2rem;
+}
+
+/* Card styling for when you add characters */
+.character-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  width: 180px;
+  text-align: center;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+  border-top: 4px solid var(--orange);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.character-card:hover {
+  transform: translateY(-5px);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    text-align: center;
+  }
+  
+  .links {
+    justify-content: center;
+  }
+  
+  .hero h1 {
+    font-size: 1.8rem;
+  }
+  
+  .dropdown-content {
+    position: static;
+    display: none;
+    width: 100%;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+}

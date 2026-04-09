@@ -13,8 +13,6 @@
   font-style: normal;
 }
 
-
-
 * {
   margin: 0;
   padding: 0;
@@ -75,8 +73,7 @@ body {
 
 .dropdown:hover .dropdown-content {
   display: block;
-}
-
+} 
 
 /* ===== HERO SECTION ===== */
 .hero {
@@ -127,7 +124,7 @@ body {
   justify-content: center;
   align-items: center;
   margin: 30px;
-  font-size: 3rem;
+  font-size: 2.3rem;
   background-color: #3c3c4400;
 }
 
@@ -140,7 +137,6 @@ h1{
     padding: 2rem;
     background: #f0f0f0;
 }
-
 .slider-wrapper {
     position: relative;
     max-width: 48rem;
@@ -192,6 +188,40 @@ h1{
 }
 
 /* ----LOGIN/SIGNUP CSS---- */
+form{
+  display: block;
+  background-color: var(--orange);
+  align-content: center;
+  justify-content: center;
+  padding: auto;
+}
+
+input{
+  border-radius: 5px;
+  border: var(--cream);
+  border-width: 12px;
+}
+
+button#signup, button#login {
+  background-color: var(--brown);
+  color: var(--cream);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 0.9rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 0 #8b4513;
+}
+
+div.loginbutton{
+   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 10vh;
+}
 
 
 /* ===== NAVBAR ===== */
@@ -212,8 +242,8 @@ nav {
   color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
-    font-family: "Protest Revolution", sans-serif;
-
+  font-family: "Protest Revolution", sans-serif;
+  text-decoration: none;
 }
 
 .links {

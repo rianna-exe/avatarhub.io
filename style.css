@@ -14,7 +14,6 @@
 }
 
 
-
 * {
   margin: 0;
   padding: 0;
@@ -34,27 +33,37 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 30px 15px;
+  padding: 20px 15px;
   flex-wrap: wrap;
   font-weight: 500;
 }
 
 #title {
-  font-size: 3rem;
+  font-size: 2rem;
   font-weight: bold;
   color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
-    font-family: "Protest Revolution", sans-serif;
+  font-family: "Protest Revolution", sans-serif;
 
 }
 
+#title:hover {
+  transform: scale(1.1);
+  color: var(--yellow);
+  transform: translateY(-5px);
+  cursor: pointer;
+  transition: all ease-in;
+}
+
+
+
 .links {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   align-items: center;
   justify-content: space-evenly;
-  width: 70vw;
+  width: 40vw;
   flex-wrap: wrap;
 }
 
@@ -68,6 +77,8 @@ nav {
 
 .links a:hover {
   color: var(--orange);
+  transform: translateY(-5px);
+  transition: all ease;
 }
 
 /* ===== DROPDOWN MENU ===== */

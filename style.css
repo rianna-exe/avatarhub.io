@@ -27,49 +27,6 @@ body {
   color: var(--grey);
 }
 
-/* ===== NAVBAR ===== */
-nav {
-  background-color: var(--brown);
-  color: var(--yellow);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 30px 15px;
-  flex-wrap: wrap;
-  font-weight: 500;
-}
-
-#title {
-  font-size: 3rem;
-  font-weight: bold;
-  color: var(--cream);
-  letter-spacing: 2px;
-  margin-left: 20px;
-    font-family: "Protest Revolution", sans-serif;
-
-}
-
-.links {
-  display: flex;
-  gap: 1.5rem;
-  align-items: center;
-  justify-content: space-evenly;
-  width: 70vw;
-  flex-wrap: wrap;
-}
-
-.links a {
-  color: var(--yellow);
-  text-decoration: none;
-  cursor: pointer;
-  transition: color 0.3s ease;
-  font-size: 1.57rem;
-}
-
-.links a:hover {
-  color: var(--orange);
-}
-
 /* ===== DROPDOWN MENU ===== */
 .dropdown {
   position: relative;
@@ -171,6 +128,7 @@ nav {
   align-items: center;
   margin: 30px;
   font-size: 3rem;
+  background-color: #3c3c4400;
 }
 
 /*----GACHA CSS STARTS HERE IVANA!!! ----*/
@@ -234,3 +192,47 @@ h1{
 }
 
 /* ----LOGIN/SIGNUP CSS---- */
+
+
+/* ===== NAVBAR ===== */
+nav {
+  background-color: var(--brown);
+  color: var(--yellow);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 15px;
+  flex-wrap: wrap;
+  font-weight: 500;
+}
+
+#title {
+  font-size: 3rem;
+  font-weight: bold;
+  color: var(--cream);
+  letter-spacing: 2px;
+  margin-left: 20px;
+    font-family: "Protest Revolution", sans-serif;
+
+}
+
+.links {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 70vw;
+  flex-wrap: wrap;
+}
+
+.links a {
+  color: var(--yellow);
+  text-decoration: none;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  font-size: 1.57rem;
+}
+
+.links a:hover {
+  color: var(--orange);
+}

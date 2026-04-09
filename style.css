@@ -3,9 +3,17 @@
   --yellow: #fcdc7b;
   --brown: #5c3026;
   --blue: #7094b7;
-  --cream: #c6b3b0;
+  --cream: #fbf9df;
   --grey: #3c3c44;
 }
+
+.protest-revolution-regular {
+  font-family: "Protest Revolution", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+
 
 * {
   margin: 0;
@@ -32,11 +40,13 @@ nav {
 }
 
 #title {
-  font-size: 2rem;
+  font-size: 3rem;
   font-weight: bold;
-  color: var(--yellow);
+  color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
+    font-family: "Protest Revolution", sans-serif;
+
 }
 
 .links {
@@ -53,7 +63,7 @@ nav {
   text-decoration: none;
   cursor: pointer;
   transition: color 0.3s ease;
-  font-size: 1.2rem;
+  font-size: 1.57rem;
 }
 
 .links a:hover {
@@ -64,12 +74,13 @@ nav {
     display: none;
 }
 
+
 /* ===== HERO SECTION ===== */
 .hero {
-  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://c4.wallpaperflare.com/wallpaper/617/455/618/avatar-the-last-airbender-wallpaper-preview.jpg");
+  background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images-ext-1.discordapp.net/external/DtH9HpDfNqVMGDI_gXcRicl11QGkRCmbZ3kECNfgQ-k/https/images5.alphacoders.com/126/thumb-1920-1265108.jpg?format=webp&width=1607&height=902");
   background-repeat: no-repeat;  
   background-size: cover;
-  background-position: center;
+  background-position:top;
   min-height: 60vh;
   display: flex;
   flex-direction: column;
@@ -80,9 +91,39 @@ nav {
   border-bottom: 4px solid var(--orange);
 }
 
-.hero h1 {
-  font-size: 2.5rem;
-  color: var(--brown);
-  margin-bottom: 2rem;
-  max-width: 800px;
+#button-container{
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  height: 30vh;
 }
+
+#play-btn {
+  background-color: var(--orange);
+  color: white;
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  font-weight: bold;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 0 4px 0 #8b4513;
+}
+
+#play-btn:hover {
+  background-color: var(--yellow);
+  color: brown;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 0 #8b4513;
+}
+
+#main-desc{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 30px;
+  font-size: 3rem;
+}
+

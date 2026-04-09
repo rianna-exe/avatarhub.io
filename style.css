@@ -174,6 +174,10 @@ nav {
 }
 
 /*----GACHA CSS STARTS HERE IVANA!!! ----*/
+h1{
+  font-size: 1.5rem;
+  background-color: var(--brown);
+}
 .gacha-container {
     padding: 2rem;
     background: #f0f0f0;

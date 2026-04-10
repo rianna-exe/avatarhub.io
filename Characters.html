@@ -4,10 +4,147 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Characters</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,800&family=Protest+Revolution&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div id="button-container">
-        
+    <nav>
+        <a id="title" href="index.html">AvatarHub.io</a>
+        <div class="links">
+            <a href="Gacha.html">Gacha</a>
+            <a href="Characters.html">Characters</a>
+            <a href="Leaderboard.html">Leaderboard</a>
+            <a href="LogIn.html"><svg xmlns="http://www.w3.org/2000/svg" height="40px" viewBox="0 -960 960 960" width="40px" fill="#fcdc7b">
+                <path d="M234-276q51-39 114-61.5T480-360q69 0 132 22.5T726-276q35-41 54.5-93T800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 59 19.5 111t54.5 93Zm246-164q-59 0-99.5-40.5T340-580q0-59 40.5-99.5T480-720q59 0 99.5 40.5T620-580q0 59-40.5 99.5T480-440Zm0 360q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q53 0 100-15.5t86-44.5q-39-29-86-44.5T480-280q-53 0-100 15.5T294-220q39 29 86 44.5T480-160Zm0-360q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm0-60Zm0 360Z"/>
+            </svg></a>
+        </div>
+    </nav>
+    
+
+<div class="characters-container">
+
+ <section class="characters">
+
+        <div id="character-grid" class="character-grid"></div>
+
+        <div class="pagination">
+            <span onclick="prevPage()" class="arrow">←</span>
+            <span id="page-number" class="page-number"></span>
+            <span onclick="nextPage()" class="arrow">→</span>
+        </div>
+
+    </section>
+
+    <div id="details"></div>
+</div>
+
+<div id="spotlight-overlay" class="spotlight-overlay" onclick="closeSpotlight(event)">
+    <div class="spotlight-card" id="spotlight-card">
+        <button class="close-btn" onclick="closeSpotlight(event)">x</button>
+        <div id="spotlight-content"></div>
     </div>
+</div>
+
+<script>
+    let allCharacters = [];
+    let currentPage = 1;
+    let perPage = 21;
+    let selectedCharacter = null;
+
+    function findCharacter(id) {
+        for (let c of allCharacters) {
+            if (c._id === id) {
+            return c;
+            }
+        }
+    }
+
+    function renderCharacters(){
+        
+        let result = document.querySelector('#character-grid');
+        let html = '';
+
+        for(let character of allCharacters){
+
+            html += 
+            `<div class="characterpage-card" id="card-${character._id}" onclick="openSpotlight('${character._id}')">
+            <img src="${character.photoUrl}">
+            <p>${character.name}</p>
+            <div class="character-details" id="details-${character._id}"></div>
+            </div>
+            `;
+            
+        }
+        result.innerHTML = html;
+    }
+
+    function openSpotlight(id) {
+    const character = findCharacter(id);
+    selectedCharacter = character;
+
+    const overlay = document.getElementById("spotlight-overlay");
+    const content = document.getElementById("spotlight-content");
+
+    content.innerHTML = `
+        <img src="${character.photoUrl}">
+        <h2>${character.name}</h2>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
+    `;
+
+    overlay.classList.add("active");
+
+    }
+
+    function closeSpotlight(e) {
+        if (e !== undefined && e !== null) {
+            e.stopPropagation();
+        }
+
+    let overlay = document.getElementById("spotlight-overlay");
+    overlay.classList.remove("active");
+    }
+    
+    async function getData(){
+
+        try{
+            const result = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters?perPage=${perPage}&page=${currentPage}`);
+            
+            const data = await result.json();
+
+            allCharacters = data;
+            
+            renderCharacters();
+            
+            document.querySelector('#page-number').innerHTML = currentPage;
+        }catch(error){
+            console.log(error);
+        }
+    }
+
+    function nextPage(){
+
+        currentPage++;
+        
+        getData();
+
+    }
+
+    function prevPage(){
+
+        if(currentPage > 1){
+
+            currentPage--;
+
+            getData();
+        }
+    }
+
+    getData();
+</script>
+
 </body>
 </html>

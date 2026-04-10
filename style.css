@@ -47,6 +47,7 @@ nav {
   color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
+  text-decoration: none;
   font-family: "Protest Revolution", sans-serif;
 
 }
@@ -192,10 +193,10 @@ nav {
 .character-card img {
     width: 100%;
     height: 280px;
-    border-radius: 10px;
+    border-radius: 15px 15px 0 0;  
     margin: 0px;
     object-fit: cover;
-    border-bottom: 3px solid var(--orange);
+    display: block;  
 }
 
 .character-name {
@@ -417,21 +418,10 @@ nav {
   background: var(--orange);
   padding: 2rem;
   border-radius: 12px;
-  width: 90%;
+  width: 100%;
   max-width: 350px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 form#form{
@@ -455,7 +445,6 @@ form div:focus-within{
   border: 2px solid var(--orange);
   background-color: white;
   box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
-
 }
 
 input{
@@ -502,17 +491,16 @@ button#signup:active, button#login:active {
   font-weight: 800;
 }
 
-p, a{
+p.redirect, a.credential-redirect {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
   color: var(--brown);
-  text-decoration: none;
+  text-decoration: underline 2px;
   font-weight: 550;
-
 }
 
-a:hover{
+ a.credential-redirect:hover{
   color: var(--cream);
 }
 
@@ -523,8 +511,159 @@ a:hover{
   justify-content: center;
   align-content: center;
   padding: 30px;
+
+  p{
+    color: var(--yellow);
+  }
+}
+
+/* ===== CHARACTERS PAGE ===== */
+
+.characters-container{
+    width: 100%;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+.characters {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
 }
 
 
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 28px;
+    width: 100%;
+    margin-bottom: 50px;
+    align-items: stretch;
+}
+
+.characterpage-card {
+    width: 100%;
+    height: 240px;
+    border-radius: 20px;
+    background: #1c1c1c;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+
+
+.character-details {
+   margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: white;
+}
+
+.characterpage-card:hover{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.characterpage-card img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.characterpage-card p{
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fcdc7b;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.arrow {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.page-number {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.spotlight-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 9999;
+}
+
+.spotlight-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.spotlight-card {
+    background: #1c1c1c;
+    border: 2px solid #e6c66d;
+    border-radius: 20px;
+    padding: 20px;
+    width: 350px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.25s ease;
+}
+
+.spotlight-overlay.active .spotlight-card {
+    transform: scale(1);
+}
+
+.spotlight-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.spotlight-card h2 {
+    color: #fcdc7b;
+    margin: 10px 0;
+}
+
+.spotlight-card p {
+    color: white;
+    font-size: 14px;
+    margin: 6px 0;
+    text-align: left;
+}
+
+.close-btn {
+    position: absolute;
+    top: 2px;
+    right: 8px;
+    background: transparent;
+    border: none;
+    color: #fcdc7b;
+    font-size: 20px;
+    cursor: pointer;
+}
 
 

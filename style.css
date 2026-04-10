@@ -488,7 +488,7 @@ button#signup:active, button#login:active {
   font-weight: 800;
 }
 
-p.redirect, a.redirect {
+p.redirect, a.credential-redirect {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
@@ -497,7 +497,7 @@ p.redirect, a.redirect {
   font-weight: 550;
 }
 
- a.redirect:hover{
+ a.credential-redirect:hover{
   color: var(--cream);
 }
 

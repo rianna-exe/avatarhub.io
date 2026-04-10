@@ -23,6 +23,8 @@ body {
   background-color: var(--cream);
   font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
   color: var(--grey);
+  min-height: 100vh;
+
 }
 
 /* ===== NAVBAR ===== */
@@ -49,6 +51,7 @@ nav {
   margin-left: 20px;
   text-decoration: none;
   font-family: "Protest Revolution", sans-serif;
+  
 
 }
 
@@ -93,10 +96,12 @@ nav {
 .links a:active{
   color: var(--orange);
   border-bottom: 2px solid var(--orange);
+
 }
 
 .links a:hover {
   color: var(--orange);
+  
 }
 
 
@@ -269,6 +274,7 @@ nav {
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
+  box-shadow: 6px 2px 12px -4px rgba(0,0,0,0.51);
 
 }
 
@@ -284,27 +290,30 @@ nav {
 .carousel-container{
   padding: 2rem;
   background-color: var(--cream);
-
 }
 
 .carousel-wrapper {
-    position: relative;
-    max-width: 48rem;
-    margin: 0 auto;
-    align-items: center;
-    
+  position: relative;
+  max-width: 48rem;
+  margin: 0 auto;
+  align-items: center;
 }
 
 .carousel {
-    border-radius: 10px;
-    border: 3px solid var(--brown);
-    background-color: var(--cream);
-    display: flex;
-    gap: 20px;
-    aspect-ratio: 16/9;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+  border-radius: 10px;
+  border: 3px solid var(--brown);
+  background-color: var(--cream);
+  display: flex;
+  gap: 20px;
+  aspect-ratio: 16/9;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-behavior: smooth;
+  box-shadow: 6px 2px 12px -4px rgba(0,0,0,0.51);
+}
+
+.carousel::-webkit-scrollbar {
+  display: none;
 }
 
 .slide {
@@ -345,7 +354,7 @@ nav {
   flex-direction: column;
   justify-content: center;
   padding: 10px;
-  background-color: var(--blue);
+  background-color: none;
   border-radius: 5px;
   font-family: inherit;
   gap: 10px;
@@ -504,6 +513,9 @@ p.redirect, a.credential-redirect {
   background-color: var(--brown);
   color: var(--yellow);
   display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
   justify-content: center;
   align-content: center;
   padding: 30px;

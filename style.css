@@ -519,6 +519,7 @@ p.redirect, a.credential-redirect {
     width: 100%;
     margin: 80px auto;
     padding: 20px;
+    overflow-x: auto;
 }
 
 .characters {
@@ -530,9 +531,10 @@ p.redirect, a.credential-redirect {
 
 .character-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-template-columns: repeat(7, 1fr);
     gap: 28px;
     width: 100%;
+    min-width: 1600px;
     margin-bottom: 50px;
     align-items: stretch;
 }
@@ -662,4 +664,21 @@ p.redirect, a.credential-redirect {
     cursor: pointer;
 }
 
+.filters{
+    margin-bottom: 20px;
+}
 
+#affiliation-filter{
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #1c1c1c;
+    color: #fcdc7b;
+    border: 2px solid #fcdc7b;
+    border-radius: 10px;
+}
+
+#affiliation-filter:hover{
+    background-color: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}

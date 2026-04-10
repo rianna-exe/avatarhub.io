@@ -30,12 +30,23 @@
     </div>
 
     <section class ="carousel-container">
+        <button class="slider-btn prev">
+            <svg width="55px" height="55px" viewBox="0 0 24 24" fill="#fbf9df" xmlns="http://www.w3.org/2000/svg">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.24000000000000005"></g><g id="SVGRepo_iconCarrier"> <path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#fbf9df" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g>
+            </svg>
+        </button>
         <div class="carousel-wrapper">
             <div id="carousel"> 
             </div>
             <div id="carousel-nav">
             </div>
         </div>
+        <button class="slider-btn next">
+            <svg width="55px" height="55px"viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" transform="matrix(-1, 0, 0, 1, 0, 0)">
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"><path d="M6 12H18M6 12L11 7M6 12L11 17" stroke="#fbf9df" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> 
+                </g>
+            </svg>
+        </button>
 
     </section>
 
@@ -48,6 +59,10 @@
 let slideCards = [];
 const carouselContainer = document.getElementById("carousel");
 const navContainer = document.getElementById("carousel-nav");
+const prevBtn = document.querySelector('.slider-btn:first-child');
+const nextBtn = document.querySelector('.slider-btn:last-child');
+const nav = document.getElementById('carousel-nav');
+
 
 async function loadSlides(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph","Zuko", "Korra","Asami","Mako","Bolin"];
@@ -118,6 +133,15 @@ function renderNav(){
     }
     navContainer.innerHTML = html;
 }
+
+prevBtn.onclick = () => {
+    carouselContainer.scrollBy({ left: -500 });
+};
+
+nextBtn.onclick = () => {
+    carouselContainer.scrollBy({ left: 500});
+};
+
 loadSlides();
 </script>
 

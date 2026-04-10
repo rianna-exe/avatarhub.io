@@ -1,3 +1,4 @@
+/* =========== GENERAL STUFF =========== */
 :root {
   --orange: #dc8c24;
   --yellow: #fcdc7b;
@@ -29,14 +30,14 @@ body {
 
 }
 
-/* ===== NAVBAR ===== */
+/* =========== NAVBAR =========== */
 nav {
   background-color: var(--brown);
   color: var(--yellow);
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 15px;
+  padding: 17px 15px;
   flex-wrap: wrap;
   font-weight: 500;
   position: sticky;
@@ -56,6 +57,8 @@ nav {
 
 }
 
+/* =========== NAVBAR - LINKS =========== */
+
 .links {
   display: flex;
   gap: 1.5rem;
@@ -70,9 +73,8 @@ nav {
   color: var(--yellow);
   text-decoration: none;
   cursor: pointer;
-  transform: translateY(-2px);
   transition: color 0.3s ease;
-  font-size: 1.57rem;
+  font-size: 1.3rem;
   position: relative;
 }
 
@@ -101,10 +103,11 @@ nav {
 
 .links a:hover {
   color: var(--orange);
+  transform: translateY(-20%) scale(1.1);
 }
 
 
-/* ===== HERO SECTION ===== */
+/* =========== HERO =========== */
 .hero {
   background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("https://images-ext-1.discordapp.net/external/DtH9HpDfNqVMGDI_gXcRicl11QGkRCmbZ3kECNfgQ-k/https/images5.alphacoders.com/126/thumb-1920-1265108.jpg?format=webp&width=1607&height=902");
   background-repeat: no-repeat;  
@@ -120,6 +123,8 @@ nav {
   padding: 3rem 2rem;
   border-bottom: 4px solid var(--orange);
 }
+
+/* =========== HERO - BUTTON =========== */
 
 #button-container{
   display: flex;
@@ -152,14 +157,15 @@ nav {
 #play-btn:hover {
   background-color: var(--yellow);
   color: brown;
-  transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(220, 140, 36, 0.5)
 }
 
 #play-btn:active {
-  transform: translateY(4px);
+  transform: translateY(20%);
   box-shadow: 0 2px 0 #8b4513;
 } 
+
+/* =========== MAIN CONTAINER =========== */
 
 .main-desc{
   display: flex;
@@ -170,7 +176,7 @@ nav {
   background-color: #3c3c4400;
 }
 
-/* ===== CHARACTER CARDS ===== */
+/* =========== CHARACTER CARDS =========== */
 #card-container {
     display: flex;
     flex-wrap: wrap;
@@ -289,7 +295,7 @@ nav {
 
 .carousel-container{
   padding: 2rem;
-
+  position: relative;
 }
 
 .carousel-wrapper {
@@ -297,6 +303,8 @@ nav {
   max-width: 48rem;
   margin: 0 auto;
   align-items: center;
+  flex: 1;
+  position: relative;
 }
 
 #carousel {
@@ -326,6 +334,37 @@ nav {
   min-width: 0;
   height: 100%;
   background-color: var(--yellow);
+}
+
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    background: var(--brown);
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+    box-shadow: 5px 5px 5px var(--grey);
+}
+
+.slider-btn.prev {
+    left: -80px;
+}
+
+.slider-btn.next {
+    right: -80px;
+}
+
+.slider-btn:hover {
+    background: var(--orange);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slider-btn:active{
+  background-color: #c27b1f;
+  transform: translateY(-20%);
+  transition: all 0.3s ease;
 }
 
 .slide-image {

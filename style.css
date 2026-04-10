@@ -414,7 +414,7 @@ nav {
   background: var(--orange);
   padding: 2rem;
   border-radius: 12px;
-  width: 90%;
+  width: 100%;
   max-width: 350px;
   box-shadow: 0 8px 20px rgba(0,0,0,0.1);
   animation: fadeIn 0.4s ease;
@@ -441,7 +441,6 @@ form div:focus-within{
   border: 2px solid var(--orange);
   background-color: white;
   box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
-
 }
 
 input{

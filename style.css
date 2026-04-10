@@ -429,25 +429,28 @@ nav {
   bottom: 10px;
   right: 10px;
 }
-
-
-/* ----LOGIN/SIGNUP CSS---- */
-.main-content{
-  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url("https://i.postimg.cc/cC5RYL41/the-legend-of-korra-the-last.webp");
-  background-repeat: repeat;  
-  background-size: cover;
-  background-position:bottom;
-  background-attachment: fixed;
+main{
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
   padding: 3rem 2rem;
-  border-bottom: 4px solid var(--orange);
+  border-bottom: none;
   overflow: auto;
   scrollbar-color: var(--orange);
-  min-height: 90vh;
+  min-height: 82.1vh;
+}
+
+
+/* ----LOGIN/SIGNUP CSS---- */
+.main-content{
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url("https://i.postimg.cc/cC5RYL41/the-legend-of-korra-the-last.webp");
+  background-repeat:repeat;  
+  background-size:cover;
+  background-position:center;
+  background-attachment:fixed;
+  
 }
 
 .form-container{
@@ -546,7 +549,7 @@ p.redirect, a.credential-redirect {
   background-color: var(--brown);
   color: var(--yellow);
   display: flex;
-  position: fixed;
+  position: relative;
   bottom: 0;
   width: 100%;
   justify-content: center;

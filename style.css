@@ -23,6 +23,8 @@ body {
   background-color: var(--cream);
   font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
   color: var(--grey);
+  min-height: 100vh;
+
 }
 
 /* ===== NAVBAR ===== */
@@ -511,6 +513,9 @@ p.redirect, a.credential-redirect {
   background-color: var(--brown);
   color: var(--yellow);
   display: flex;
+  position: fixed;
+  bottom: 0;
+  width: 100vw;
   justify-content: center;
   align-content: center;
   padding: 30px;

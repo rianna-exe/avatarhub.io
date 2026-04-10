@@ -5,6 +5,8 @@ async function loadFeatured(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph", "Korra","Asami","Mako","Bolin"];
     let characterData = [];
 
+    cardContainer.innerHTML = "<h3>Loading...</h3>"
+
     for(character of featuredCharacters){
         try{
             let characterResponse = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters?name=${character}`)
@@ -19,6 +21,9 @@ async function loadFeatured(){
             } else {
                 homepageCards.push(characterData[0]);
             }
+
+            renderCards();
+
             
         } catch(error){
             console.error(error);
@@ -26,7 +31,6 @@ async function loadFeatured(){
     }
 
     console.log(homepageCards);
-    renderCards();
 
 }
 

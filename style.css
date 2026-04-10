@@ -521,6 +521,156 @@ a:hover{
   padding: 30px;
 }
 
+/* ===== CHARACTERS PAGE ===== */
 
+.characters-container{
+    width: 100%;
+    margin: 80px auto;
+    padding: 20px;
+}
+
+.characters {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+
+.character-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    flex: 3;
+    gap: 40px;
+    width: 100%;
+    margin-bottom: 40px;
+    align-items: start;
+}
+
+.characterpage-card {
+    width: 100%;
+    overflow: hidden;
+    max-height: 260px;
+    border-radius: 18px;
+    border: 2px solid #e6c66d;
+    background: #1c1c1c;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    transition: max-height 0.3s ease, box-shadow 0.2s ease;
+}
+
+
+.character-details {
+   margin-top: 10px;
+    text-align: left;
+    font-size: 14px;
+    color: white;
+}
+
+
+
+.characterpage-card:hover{
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+}
+
+.characterpage-card img{
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+.characterpage-card p{
+    margin-top: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fcdc7b;
+}
+
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.arrow {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.page-number {
+    font-size: 18px;
+    cursor: pointer;
+}
+
+.spotlight-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s ease;
+    z-index: 9999;
+}
+
+.spotlight-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.spotlight-card {
+    background: #1c1c1c;
+    border: 2px solid #e6c66d;
+    border-radius: 20px;
+    padding: 20px;
+    width: 350px;
+    max-width: 90%;
+    text-align: center;
+    position: relative;
+    transform: scale(0.9);
+    transition: transform 0.25s ease;
+}
+
+.spotlight-overlay.active .spotlight-card {
+    transform: scale(1);
+}
+
+.spotlight-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+.spotlight-card h2 {
+    color: #fcdc7b;
+    margin: 10px 0;
+}
+
+.spotlight-card p {
+    color: white;
+    font-size: 14px;
+    margin: 6px 0;
+    text-align: left;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    background: transparent;
+    border: none;
+    color: #fcdc7b;
+    font-size: 26px;
+    cursor: pointer;
+}
 
 

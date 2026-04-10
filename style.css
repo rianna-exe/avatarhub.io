@@ -49,6 +49,7 @@ nav {
   margin-left: 20px;
   text-decoration: none;
   font-family: "Protest Revolution", sans-serif;
+  
 
 }
 
@@ -93,10 +94,12 @@ nav {
 .links a:active{
   color: var(--orange);
   border-bottom: 2px solid var(--orange);
+
 }
 
 .links a:hover {
   color: var(--orange);
+  
 }
 
 

@@ -47,6 +47,7 @@ nav {
   color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
+  text-decoration: none;
   font-family: "Protest Revolution", sans-serif;
 
 }
@@ -192,10 +193,10 @@ nav {
 .character-card img {
     width: 100%;
     height: 280px;
-    border-radius: 10px;
+    border-radius: 15px 15px 0 0;  
     margin: 0px;
     object-fit: cover;
-    border-bottom: 3px solid var(--orange);
+    display: block;  
 }
 
 .character-name {
@@ -419,17 +420,6 @@ nav {
   animation: fadeIn 0.4s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 form#form{
   display: flex;
   flex-direction: column;
@@ -498,17 +488,16 @@ button#signup:active, button#login:active {
   font-weight: 800;
 }
 
-p, a{
+p.redirect, a.credential-redirect {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
   color: var(--brown);
-  text-decoration: none;
+  text-decoration: underline 2px;
   font-weight: 550;
-
 }
 
-a:hover{
+ a.credential-redirect:hover{
   color: var(--cream);
 }
 
@@ -519,6 +508,10 @@ a:hover{
   justify-content: center;
   align-content: center;
   padding: 30px;
+
+  p{
+    color: var(--yellow);
+  }
 }
 
 /* ===== CHARACTERS PAGE ===== */

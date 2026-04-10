@@ -14,14 +14,20 @@ async function loadFeatured(){
             }
 
             characterData = await characterResponse.json();
-            homepageCards.push(characterData[0]);
-            renderCards();
+            if(character === "Aang" || character === "Katara" || character === "Sokka"){
+                homepageCards.push(characterData[1]);
+            } else {
+                homepageCards.push(characterData[0]);
+            }
+            
         } catch(error){
             console.error(error);
         }
     }
 
     console.log(homepageCards);
+    renderCards();
+
 }
 
 function renderCards(){

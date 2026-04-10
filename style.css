@@ -344,4 +344,15 @@ div.loginbutton{
   height: 10vh;
 }
 
+.footer{
+  background-color: var(--brown);
+  color: var(--yellow);
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 30px;
+}
+
+
+
 

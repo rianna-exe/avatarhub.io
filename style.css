@@ -417,7 +417,7 @@ nav {
 
 /* ----LOGIN/SIGNUP CSS---- */
 .main-content{
-  background-image: linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0.4)), url("https://i.postimg.cc/cC5RYL41/the-legend-of-korra-the-last.webp");
+  background-image: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.6)), url("https://i.postimg.cc/cC5RYL41/the-legend-of-korra-the-last.webp");
   background-repeat: repeat;  
   background-size: cover;
   background-position:bottom;

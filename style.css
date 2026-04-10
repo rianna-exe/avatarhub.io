@@ -405,39 +405,111 @@ nav {
 
 
 /* ----LOGIN/SIGNUP CSS---- */
-form{
-  display: block;
-  background-color: var(--orange);
+
+
+.form-container{
+  align-items: center;
+  margin: 2rem auto;
+  background: var(--orange);
+  padding: 2rem;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 350px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+  animation: fadeIn 0.4s ease;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+form#form{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
   align-content: center;
   justify-content: center;
-  padding: auto;
+  padding: 0;
+}
+
+form div{
+  display: flex;
+  align-items: center;
+  background-color: var(--cream);
+  border-radius: 8px;
+  padding: 0.5rem;
+}
+
+form div:focus-within{
+  border: 2px solid var(--orange);
+  background-color: white;
+  box-shadow: 0 0 0 2px rgba(255, 165, 0, 0.2);
+
 }
 
 input{
-  border-radius: 5px;
-  border: var(--cream);
+  border: none;
+  outline: none;
+  background: transparent;
+  flex: 1;
+  padding: 0.5rem;
+  font-size: 1rem;
   border-width: 12px;
 }
 
 button#signup, button#login {
+  box-shadow: 0 4px 0 #8b4513;
+  margin-top: 1rem;
   background-color: var(--brown);
   color: var(--cream);
   border: none;
-  padding: 1rem 2rem;
-  font-size: 0.9rem;
+  padding: 0.9rem;
+  font-size: 1rem;
   font-weight: bold;
-  border-radius: 50px;
+  border-radius: 8px;
   cursor: pointer;
   transition: all 0.3s ease;
   font-family: inherit;
-  box-shadow: 0 4px 0 #8b4513;
 }
 
-div.loginbutton{
-   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  height: 10vh;
+button#signup:hover, button#login:hover {
+  transform: translateY(-2px);
+}
+
+button#signup:active, button#login:active {
+  transform: translateY(2px);
+  box-shadow: 0 2px 0 #8b4513;
+  
+}
+
+#main-desc{
+  text-align: center;
+  margin-bottom: 1rem;
+  background-color: #3c3c4400;
+  color: var(--brown);
+  font-size: 2.2rem;
+  font-weight: 800;
+}
+
+p, a{
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: var(--brown);
+  text-decoration: none;
+  font-weight: 550;
+
+}
+
+a:hover{
+  color: var(--cream);
 }
 
 .footer{

@@ -47,6 +47,7 @@ nav {
   color: var(--cream);
   letter-spacing: 2px;
   margin-left: 20px;
+  text-decoration: none;
   font-family: "Protest Revolution", sans-serif;
 
 }
@@ -419,17 +420,6 @@ nav {
   animation: fadeIn 0.4s ease;
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 form#form{
   display: flex;
   flex-direction: column;
@@ -498,17 +488,16 @@ button#signup:active, button#login:active {
   font-weight: 800;
 }
 
-p, a{
+p.redirect, a.redirect {
   text-align: center;
   margin-top: 1rem;
   font-size: 0.9rem;
   color: var(--brown);
-  text-decoration: none;
+  text-decoration: underline 2px;
   font-weight: 550;
-
 }
 
-a:hover{
+ a.redirect:hover{
   color: var(--cream);
 }
 

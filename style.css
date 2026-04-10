@@ -538,25 +538,23 @@ a:hover{
 
 .character-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    flex: 3;
-    gap: 40px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 28px;
     width: 100%;
-    margin-bottom: 40px;
-    align-items: start;
+    margin-bottom: 50px;
+    align-items: stretch;
 }
 
 .characterpage-card {
     width: 100%;
-    overflow: hidden;
-    max-height: 260px;
-    border-radius: 18px;
-    border: 2px solid #e6c66d;
+    border-radius: 20px;
+    border: 1px solid rgba(230, 198, 109, 0.35);
     background: #1c1c1c;
-    padding: 12px;
+    padding: 14px;
     text-align: center;
     cursor: pointer;
-    transition: max-height 0.3s ease, box-shadow 0.2s ease;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 
@@ -566,8 +564,6 @@ a:hover{
     font-size: 14px;
     color: white;
 }
-
-
 
 .characterpage-card:hover{
     box-shadow: 0 10px 20px rgba(0,0,0,0.3);

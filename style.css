@@ -36,7 +36,9 @@ nav {
   flex-wrap: wrap;
   font-weight: 500;
   position: sticky;
-  transition: all 0.3s ease
+  transition: all 0.3s ease;
+  top:0;
+  z-index: 100;
 }
 
 #title {
@@ -163,13 +165,88 @@ nav {
   box-shadow: 0 2px 0 #8b4513;
 } 
 
-#main-desc{
+.main-desc{
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 30px;
   font-size: 2.3rem;
   background-color: #3c3c4400;
+}
+
+/* ===== CHARACTER CARDS ===== */
+#card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 30px;
+    padding: 40px 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.character-card {
+    background: var(--blue);
+    width: 300px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.character-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.character-card img {
+    width: 100%;
+    height: 280px;
+    border-radius: 10px;
+    margin: 0px;
+    object-fit: cover;
+    border-bottom: 3px solid var(--orange);
+}
+
+.character-name {
+    font-size: 2rem;
+    text-align: center;
+    padding: 15px;
+    margin: 0px;
+    background-color: var(--grey);
+    color: var(--yellow);
+    font-family: "Protest Revolution", sans-serif;
+    letter-spacing: 1px;
+}
+
+.character-card ul {
+    list-style: none;
+    padding: 15px;
+    margin: 0;
+    text-align: center;
+}
+
+.character-card li {
+    padding: 8px 0;
+    color: white;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--yellow);
+}
+
+.character-card li:last-child {
+    border-bottom: none;
+}
+
+#card-container::before {
+    content: "Featured Characters";
+    display: block;
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: "Protest Revolution", sans-serif;
+    color: var(--brown);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--orange);
 }
 
 /*----GACHA CSS STARTS HERE IVANA!!! ----*/

@@ -36,6 +36,89 @@ async function getUsername(userid){
 
 }
 
+const rollBtn = document.getElementById('roll-btn');
+let currentRolledCharacter = null;
+
+//overlay
+const gachaOverlay = document.createElement('div');
+gachaOverlay.id = 'gacha-overlay';
+gachaOverlay.className = 'spotlight-overlay';
+gachaOverlay.innerHTML = `
+    <div class="spotlight-card">
+        <button class="close-btn" onclick="closeGachaPopup(event)">x</button>
+        <div id="gacha-popup-content"></div>
+        <button id="save-character-btn" class="save-btn">Save Character</button>
+    </div>
+`;
+document.body.appendChild(gachaOverlay);
+
+// to fetch a random character
+async function rollRandomCharacter() {
+    try {
+       const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters?perPage=100');
+        const characters = await response.json();
+        
+        // Pick a random character from the first 100
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        const randomCharacter = characters[randomIndex];
+        
+        currentRolledCharacter = randomCharacter;
+        displayGachaResult(randomCharacter);
+        
+    } catch (error) {
+        console.error('Error rolling character:', error);
+        alert('Failed to roll a character. Please try again.');
+    }
+}
+
+// Function to display the rolled character in a popup
+function displayGachaResult(character) {
+    const popupContent = document.getElementById('gacha-popup-content');
+    const overlay = document.getElementById('gacha-overlay');
+    
+    popupContent.innerHTML = `
+        <img src="${character.photoUrl}">
+        <h2>${character.name}</h2>
+        <p><b>Affiliation:</b> ${character.affiliation}</p>
+        <p><b>Allies:</b> ${character.allies}</p>
+        <p><b>Enemies:</b> ${character.enemies}</p>
+    `;
+    
+    overlay.classList.add('active');
+}
+
+// Function to close the popup
+window.closeGachaPopup = function(e) {
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+    }
+    const overlay = document.getElementById('gacha-overlay');
+    overlay.classList.remove('active');
+}
+
+// Close popup when clicking outside
+gachaOverlay.addEventListener('click', function(e) {
+    if (e.target === gachaOverlay) {
+        closeGachaPopup();
+    }
+});
+
+// Save character button functionality
+document.getElementById('save-character-btn').addEventListener('click', function() {
+    if (currentRolledCharacter) {
+        // handle saving the character
+        alert(`${currentRolledCharacter.name}" has been added to your collection!`);
+        
+      //  save logic here
+    
+        
+        // Close the popup after saving
+        closeGachaPopup();
+    }
+});
+
+// Add click event to the roll button
+rollBtn.addEventListener('click', rollRandomCharacter);
 
 async function loadSlides(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph","Zuko", "Korra","Asami","Mako","Bolin"];

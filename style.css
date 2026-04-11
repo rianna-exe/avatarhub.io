@@ -26,8 +26,8 @@ body {
   font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
   color: var(--grey);
   min-height: 100vh;
-  
-
+  display: flex;           
+  flex-direction: column;  
 }
 
 /* =========== NAVBAR =========== */
@@ -478,7 +478,7 @@ main{
   border-bottom: none;
   overflow: auto;
   scrollbar-color: var(--orange);
-  min-height: 82.1vh;
+  flex:1;
 }
 
 
@@ -489,6 +489,7 @@ main{
   background-size:cover;
   background-position:center;
   background-attachment:fixed;
+  min-height: 85vh;
   
 }
 

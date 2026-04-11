@@ -9,10 +9,12 @@ const prevBtn = document.querySelector('.slider-btn:first-child');
 const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
+let uid; 
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // User is signed in
-    const uid = user.uid;
+    uid = user.uid;
     const email = user.email;
     const username = await getUsername(uid);
     document.getElementById("welcome").innerHTML=`Welcome ${username}`;
@@ -64,7 +66,7 @@ async function rollRandomCharacter() {
         
         currentRolledCharacter = randomCharacter;
         displayGachaResult(randomCharacter);
-        
+        console.log(currentRolledCharacter)
     } catch (error) {
         console.error('Error rolling character:', error);
         alert('Failed to roll a character. Please try again.');
@@ -110,7 +112,8 @@ document.getElementById('save-character-btn').addEventListener('click', function
         alert(`${currentRolledCharacter.name}" has been added to your collection!`);
         
       //  save logic here
-    
+        const id = currentRolledCharacter._id
+        addDoc(collection(db, "gachaItems"), { id, uid })
         
         // Close the popup after saving
         closeGachaPopup();

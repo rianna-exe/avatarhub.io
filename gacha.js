@@ -135,27 +135,41 @@ function displayGachaResult(character) {
     const isAvatar = avatarNames.some(avatarName => 
         character.name.includes(avatarName)
     );
+
     
     if (isAvatar) {
-        alert("LEGENDARY PULL!!");
-    }
-    else if (rareCharacters.some(rareName => 
-        character.name.includes(rareName)
-        
-    )) {
-        alert("RARE PULL!!");
-    }
-    else {
-        alert("Common Character");
-    }
-    
-    popupContent.innerHTML = `
+        popupContent.innerHTML = `
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em; bacground-color: var(--orange);">LEGENDARY</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation}</p>
         <p><b>Allies:</b> ${character.allies}</p>
         <p><b>Enemies:</b> ${character.enemies}</p>
     `;
+    }
+    else if (rareCharacters.some(rareName => 
+        character.name.includes(rareName)
+    )) {
+                popupContent.innerHTML = `
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--dark-grey); font-family: 'avatar-subfont'; font-size: 1.5em; background-color: var(--yellow);">RARE</div>
+        <img src="${character.photoUrl}">
+        <h2>${character.name}</h2>
+        <p><b>Affiliation:</b> ${character.affiliation}</p>
+        <p><b>Allies:</b> ${character.allies}</p>
+        <p><b>Enemies:</b> ${character.enemies}</p>
+    `;
+    }
+    else {
+                popupContent.innerHTML = `
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
+        <img src="${character.photoUrl}">
+        <h2>${character.name}</h2>
+        <p><b>Affiliation:</b> ${character.affiliation}</p>
+        <p><b>Allies:</b> ${character.allies}</p>
+        <p><b>Enemies:</b> ${character.enemies}</p>
+    `;
+    }
+    
     
     overlay.classList.add('active');
 }

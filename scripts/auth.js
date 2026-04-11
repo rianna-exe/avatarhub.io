@@ -27,16 +27,7 @@ export async function register(username, email, password) {
     }
 }
 
-// onAuthStateChanged(auth, (user) => {
-//   if (user) {
-//     // User is signed in
-//     const uid = user.uid;
-//     const email = user.email;
-//     console.log(user.uid, user.email)
-//   } else {
-//     // User is signed out
-//   }
-// });
+
 
 async function createUser(id, username){
     try {
@@ -44,4 +35,17 @@ async function createUser(id, username){
     } catch (e) {
         console.error('Failed to create user', e)
     }
+}
+
+export async function login(email, password) {
+    signInWithEmailAndPassword(auth, email, password)
+        .then(() => {
+            console.log(`successfully logged in as ${email}!`)
+            //window.location.href = "/pages/builds/builds.html"
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            console.error(errorCode, errorMessage)
+        });
 }

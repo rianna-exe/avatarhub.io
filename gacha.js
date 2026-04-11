@@ -1,9 +1,42 @@
+import { auth, db } from "./scripts/global.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+import { collection, getDoc, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+
 let slideCards = [];
 const carouselContainer = document.getElementById("carousel");
 const navContainer = document.getElementById("carousel-nav");
 const prevBtn = document.querySelector('.slider-btn:first-child');
 const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
+
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    // User is signed in
+    const uid = user.uid;
+    const email = user.email;
+    const username = await getUsername();
+    document.getElementById("welcome").innerHTML=`Welcome ${username}`;
+
+    console.log(user.uid, user.email)
+    
+
+  } else {
+    // User is signed out
+  }
+});
+
+async function getUsername(){
+    
+    try{
+        const userSnapshot =  await getDocs(collection(db, "users"));
+        const user = userSnapshot.docs.find(doc => doc.data().id === auth.currentUser.uid);
+        console.log(user.data().username)
+        return user.data().username;
+    }catch(error){
+        console.error(error);
+    }
+
+}
 
 
 async function loadSlides(){

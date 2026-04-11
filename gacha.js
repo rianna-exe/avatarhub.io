@@ -34,7 +34,6 @@ async function fetchDataFromDB(userid) {
             console.log("No gacha items found");
             return;
         }
-
         const invList = document.getElementById("inventory-list");
         let html = '';
 
@@ -51,7 +50,6 @@ async function fetchDataFromDB(userid) {
                 <div class="characterpage-card" id="card-${response._id}">
                 <img src="${response.photoUrl}">
                 <p>${response.name}</p>
-                <div class="character-details" id="details-${response._id}"></div>
                 </div>
             `;
         }
@@ -106,7 +104,7 @@ document.body.appendChild(gachaOverlay);
 // to fetch a random character
 async function rollRandomCharacter() {
     try {
-       const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters?perPage=100');
+       const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters?perPage=200');
         const characters = await response.json();
         
         // Pick a random character from the first 100

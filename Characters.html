@@ -27,6 +27,8 @@
 
  <section class="characters">
 
+        <h1 class="filter-header" id="page-header">All Nations</h1>
+
         <div class="filters">
         <select id="affiliation-filter" onchange="applyFilter()">
             <option id="option-filter" value="">All Nations</option>
@@ -123,6 +125,14 @@
 
     let select = document.getElementById("affiliation-filter");
     currentAffiliation = select.value;
+
+    let header = document.getElementById("page-header");
+
+    if(currentAffiliation === ""){
+        header.innerHTML = "All Nations";
+    } else {
+        header.innerHTML = currentAffiliation;
+    }
 
     currentPage = 1;
 

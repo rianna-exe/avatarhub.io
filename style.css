@@ -718,6 +718,13 @@ p.redirect, a.credential-redirect {
     cursor: pointer;
 }
 
+.filter-header {
+  text-align: center;
+  font-size: 42px;
+  margin-bottom: 20px;
+  margin-top: 10px;
+}
+
 .spotlight-overlay {
     position: fixed;
     inset: 0;

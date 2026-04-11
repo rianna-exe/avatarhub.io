@@ -53,6 +53,15 @@
 
     <section class = "character-section">
         <h1 id = "inventory-title">Your Characters</h1>
+        <div class="filters">
+        <select id="affiliation-filter" onchange="applyFilter()">
+            <option id="option-filter" value="">All Nations</option>
+            <option id="option-filter" value="Air Nomads">Air Nomads</option>
+            <option id="option-filter" value="Water Tribe">Water Tribe</option>
+            <option id="option-filter" value="Earth Kingdom">Earth Kingdom</option>
+            <option id="option-filter" value="Fire Nation">Fire Nation</option>
+        </select>
+        </div>
         <div id="inventory-list"></div>
     </section>
     </main>

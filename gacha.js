@@ -159,6 +159,7 @@ gachaOverlay.addEventListener('click', function(e) {
     }
 });
 
+// Points system
 function addPoints(currChar) {
     if(currChar.name.includes("Zuko")) return 10;
     else if(currChar.name.includes("Dee")) return 100;

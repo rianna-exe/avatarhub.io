@@ -805,6 +805,9 @@ p.redirect, a.credential-redirect {
 /* ===== LEADERBOARD PAGE ===== */
 table{
   display: table;
+
+}
+
 #inventory-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

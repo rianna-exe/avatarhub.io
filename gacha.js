@@ -1,3 +1,4 @@
+
 import { auth, db } from "./scripts/global.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import { collection, getDoc, addDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
@@ -17,8 +18,6 @@ const ROLL_LIMIT = 10;
 const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 
 let uid; 
-let currentAffiliation = "";
-let allCharacters = []; // Store all characters for filtering
 
 onAuthStateChanged(auth, async (user) => {
   if (user) {
@@ -30,11 +29,9 @@ onAuthStateChanged(auth, async (user) => {
     console.log(user)
   } else {
     // User is signed out
-    document.getElementById("welcome").innerHTML=`Welcome, Guest!`;
   }
 });
 
-// Modified fetchDataFromDB to store characters for filtering
 async function fetchDataFromDB(userid) {
     try {
         let items = [];
@@ -43,74 +40,33 @@ async function fetchDataFromDB(userid) {
 
         if (snapshot.empty) {
             console.log("No gacha items found");
-            document.getElementById("inventory-list").innerHTML = '<p style="color: #fbf9df;">No characters yet. Try rolling!</p>';
             return;
         }
-        
         const invList = document.getElementById("inventory-list");
-        
-        // Clear and rebuild the items array
-        allCharacters = [];
-        
+        let html = '';
+
         snapshot.forEach(doc => {
             items.push(doc.data());
         });
 
-        // Fetch all character data
         for await (const element of items) {
             let request = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
             let response = await request.json();
-            allCharacters.push(response);
+            console.log(response)
+
+            html += `
+                <div class="characterpage-card" id="card-${response._id}">
+                <img src="${response.photoUrl}">
+                <p>${response.name}</p>
+                </div>
+            `;
         }
-        
-        // Apply current filter
-        applyFilterToDisplay();
-        
+
+        invList.innerHTML = html;
+
     } catch (error) {
         console.error(error);
     }
-}
-
-// New function to apply filter to display
-function applyFilterToDisplay() {
-    const invList = document.getElementById("inventory-list");
-    
-    let filteredCharacters = allCharacters;
-    
-    // Apply affiliation filter if selected
-    if (currentAffiliation && currentAffiliation !== "") {
-        filteredCharacters = allCharacters.filter(character => 
-            character.affiliation && character.affiliation === currentAffiliation
-        );
-    }
-    
-    // Display filtered characters
-    if (filteredCharacters.length === 0) {
-        invList.innerHTML = '<p style="color: #fbf9df;">No characters found with this affiliation.</p>';
-        return;
-    }
-    
-    let html = '';
-    filteredCharacters.forEach(character => {
-        html += `
-            <div class="characterpage-card" id="card-${character._id}">
-                <img src="${character.photoUrl}" alt="${character.name}">
-                <p>${character.name}</p>
-                <small style="display: block; font-size: 0.8em; color: #fcdc7b; margin-top: 5px;">${character.affiliation || "Unknown"}</small>
-            </div>
-        `;
-    });
-    
-    invList.innerHTML = html;
-}
-
-// Updated applyFilter function
-window.applyFilter = function() {
-    let select = document.getElementById("affiliation-filter");
-    currentAffiliation = select.value;
-    
-    // Apply the filter to the display
-    applyFilterToDisplay();
 }
 
 async function getUsername(userid){
@@ -148,7 +104,7 @@ gachaOverlay.innerHTML = `
     <div class="spotlight-card">
         <button class="close-btn" onclick="closeGachaPopup(event)">x</button>
         <div id="gacha-popup-content"></div>
-        <button id="save-character-btn" class="save-btn" style="padding: 10px; background-color: #fcdc7b; color: #1c1c1c; border-radius: 5px; margin: 2px; cursor: pointer;">Save Character</button>
+        <button id="save-character-btn" class="save-btn" style="padding: 10px; background-color: #fcdc7b; color: 1c1c1c; border-radius: 5px; margin: 2px;">Save Character</button>
     </div>
 `;
 document.body.appendChild(gachaOverlay);
@@ -185,7 +141,7 @@ function displayGachaResult(character) {
     if (isAvatar) {
         popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
-        <img src="${character.photoUrl}" style="max-width: 200px; border-radius: 10px;">
+        <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -197,7 +153,7 @@ function displayGachaResult(character) {
     )) {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
-        <img src="${character.photoUrl}" style="max-width: 200px; border-radius: 10px;">
+        <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -207,7 +163,7 @@ function displayGachaResult(character) {
     else {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
-        <img src="${character.photoUrl}" style="max-width: 200px; border-radius: 10px;">
+        <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -234,6 +190,25 @@ gachaOverlay.addEventListener('click', function(e) {
         closeGachaPopup();
     }
 });
+
+function applyFilter(){
+
+    let select = document.getElementById("affiliation-filter");
+    currentAffiliation = select.value;
+
+    let header = document.getElementById("page-header");
+
+    if(currentAffiliation === ""){
+        header.innerHTML = "All Nations";
+    } else {
+        header.innerHTML = currentAffiliation;
+    }
+
+    currentPage = 1;
+
+    getData();
+
+    }
 
 // Points system========================
 
@@ -308,24 +283,13 @@ function toast(characterName,points) {
     setTimeout(() => toastEl.remove(), 2000);
 }
 
-// Add CSS animation for toast
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInOut {
-        0% { opacity: 0; transform: translateX(20px); }
-        10% { opacity: 1; transform: translateX(0); }
-        90% { opacity: 1; transform: translateX(0); }
-        100% { opacity: 0; transform: translateX(20px); }
-    }
-`;
-document.head.appendChild(style);
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
 
     if(!uid) {
         alert("You must be logged in to save characters");
-        window.location.href = "Login.html";  //send them to log in page
+        window.location.href = "Login.html";  //sendthem to log in page
         return;
     }
     
@@ -339,9 +303,7 @@ document.getElementById('save-character-btn').addEventListener('click', function
         toast(`${currentRolledCharacter.name}`, points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
-        .then(() => {
-            fetchDataFromDB(uid);
-        });
+        fetchDataFromDB(uid);
         
         // Close the popup after saving
         closeGachaPopup();
@@ -350,13 +312,6 @@ document.getElementById('save-character-btn').addEventListener('click', function
 
 // Modified roll function
 async function handleRollWithLimit() {
-    // Check if user is logged in
-    if(!uid) {
-        alert("Please log in to roll for characters!");
-        window.location.href = "Login.html";
-        return;
-    }
-    
     // Check if user has roll limit in localStorage
     const savedData = localStorage.getItem(`rollData_${uid}`);
     
@@ -412,7 +367,6 @@ function startCooldownDisplay(remainingSeconds) {
         timerDisplay = document.createElement('div');
         timerDisplay.id = 'cooldown-timer';
         timerDisplay.style.marginTop = '10px';
-        timerDisplay.style.color = '#fcdc7b';
         rollBtn.parentNode.insertBefore(timerDisplay, rollBtn.nextSibling);
     }
     
@@ -443,7 +397,7 @@ async function loadSlides(){
     let characterData = [];
     let rarity = ["LEGENDARY", "RARE"];
 
-    carouselContainer.innerHTML = "<h3 style='color: #fbf9df;'>Loading...</h3>"
+    carouselContainer.innerHTML = "<h3>Loading...</h3>"
 
     for(let character of featuredCharacters){
         try{
@@ -558,3 +512,4 @@ nextBtn.onclick = () => {
 setTimeout(updateActiveNav, 200);
 
 loadSlides();
+

@@ -1,3 +1,4 @@
+
 import { auth, db } from "./scripts/global.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import { collection, getDoc, addDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
@@ -139,24 +140,24 @@ function displayGachaResult(character) {
     
     if (isAvatar) {
         popupContent.innerHTML = `
-        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em; bacground-color: var(--orange);">LEGENDARY</div>
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     else if (rareCharacters.some(rareName => 
         character.name.includes(rareName)
     )) {
                 popupContent.innerHTML = `
-        <div style="padding: 20px 15px; border-radius: 5px; color: var(--dark-grey); font-family: 'avatar-subfont'; font-size: 1.5em; background-color: var(--yellow);">RARE</div>
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     else {
@@ -164,9 +165,9 @@ function displayGachaResult(character) {
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     
@@ -189,6 +190,25 @@ gachaOverlay.addEventListener('click', function(e) {
         closeGachaPopup();
     }
 });
+
+function applyFilter(){
+
+    let select = document.getElementById("affiliation-filter");
+    currentAffiliation = select.value;
+
+    let header = document.getElementById("page-header");
+
+    if(currentAffiliation === ""){
+        header.innerHTML = "All Nations";
+    } else {
+        header.innerHTML = currentAffiliation;
+    }
+
+    currentPage = 1;
+
+    getData();
+
+    }
 
 // Points system========================
 
@@ -520,3 +540,4 @@ nextBtn.onclick = () => {
 setTimeout(updateActiveNav, 200);
 
 loadSlides();
+

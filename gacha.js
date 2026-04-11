@@ -147,7 +147,6 @@ function displayGachaResult(character) {
     }
     else {
         alert("Common Character");
-        return 5;
     }
     
     popupContent.innerHTML = `

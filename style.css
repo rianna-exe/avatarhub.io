@@ -177,7 +177,7 @@ nav {
 
 /* =========== MAIN CONTAINER =========== */
 
-.main-desc{
+.main-desc, th.main-content{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -792,4 +792,9 @@ filters{
     margin-bottom: 30px;
     padding-bottom: 10px;
     border-bottom: 3px solid var(--orange);
+}
+
+/* ===== LEADERBOARD PAGE ===== */
+table{
+  display: table;
 }

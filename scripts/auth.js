@@ -19,7 +19,7 @@ export async function register(username, email, password) {
         const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
         console.log(userCredentials.user, username)
         await createUser(userCredentials.user.uid, username)
-        //window.location.href = "/pages/login.html"
+        window.location.href = "../gacha.html"
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -41,7 +41,7 @@ export async function login(email, password) {
     signInWithEmailAndPassword(auth, email, password)
         .then(() => {
             console.log(`successfully logged in as ${email}!`)
-            //window.location.href = "/pages/builds/builds.html"
+            window.location.href = "../gacha.html"
         })
         .catch((error) => {
             const errorCode = error.code;

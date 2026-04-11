@@ -9,10 +9,12 @@ const prevBtn = document.querySelector('.slider-btn:first-child');
 const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
+let uid; 
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // User is signed in
-    const uid = user.uid;
+    uid = user.uid;
     const email = user.email;
     const username = await getUsername(uid);
     document.getElementById("welcome").innerHTML=`Welcome ${username}`;
@@ -64,7 +66,7 @@ async function rollRandomCharacter() {
         
         currentRolledCharacter = randomCharacter;
         displayGachaResult(randomCharacter);
-        
+        console.log(currentRolledCharacter)
     } catch (error) {
         console.error('Error rolling character:', error);
         alert('Failed to roll a character. Please try again.');
@@ -105,18 +107,60 @@ gachaOverlay.addEventListener('click', function(e) {
 });
 
 // Save character button functionality
-document.getElementById('save-character-btn').addEventListener('click', function() {
+document.getElementById('save-character-btn').addEventListener('click', async function () {
     if (currentRolledCharacter) {
-        // handle saving the character
-        alert(`${currentRolledCharacter.name}" has been added to your collection!`);
-        
-      //  save logic here
-    
-        
-        // Close the popup after saving
+
+        const uid = auth.currentUser.uid;
+        const id = currentRolledCharacter._id;
+
+        alert(`${currentRolledCharacter.name} has been added to your collection!`);
+
+        try {
+            // 1. Save to Firestore
+            await addDoc(collection(db, "gachaItems"), { id, uid });
+
+            // 2. Fetch updated list
+            const items = await fetchListData(uid);
+
+            // 3. Render list
+            await renderList(items);
+
+        } catch (error) {
+            console.error(error);
+        }
+
+        // Close popup
         closeGachaPopup();
     }
 });
+
+async function fetchListData(uid) {
+    const q = query(collection(db, "gachaItems"), where("id", "==", uid));
+    const itemSnapshot = await getDocs(q);
+    const items = itemSnapshot.docs.map(doc => doc.data());
+    console.log(items)
+    return items;
+}
+
+async function renderList(items) {
+    let html = '';
+    const invList = document.getElementById("inventory-list");
+
+    for (const i of items) {
+        try {
+            let request = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${i.characterID}`);
+            let currItem = await request.json();
+
+            html += `
+                <div>${currItem.name}</div>
+            `;
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    invList.innerHTML = html;
+}
 
 // Add click event to the roll button
 rollBtn.addEventListener('click', rollRandomCharacter);

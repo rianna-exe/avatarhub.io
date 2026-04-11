@@ -293,16 +293,22 @@ nav {
   transition: all 0.3s ease;
   font-family: inherit;
   box-shadow: 6px 2px 12px -4px rgba(0,0,0,0.51);
-
 }
 
 #roll-btn:hover{
   transform: scale(1.125);
-  transform: translateY(-2px);
+  transform: translateY(-20%);
   text-shadow: 0 0 10px var(--orange);
-  color: var(--orange);
+  background-color: var(--orange);
+  color: var(--cream);
   transition: all ease-in-out 0.3s;
 
+}
+
+#roll-btn:active{
+  transform: translateY(-10%);
+  background-color: #a26616;
+  box-shadow: 5px 5px 5px var(--grey);
 }
 
 .carousel-container{

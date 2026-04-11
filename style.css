@@ -811,3 +811,17 @@ p.redirect, a.credential-redirect {
     max-width: 900px;
     margin: 0 auto;
 }
+
+#cooldown-timer {
+    font-size: 14px;
+    color: #dc8c24;
+    margin-top: 10px;
+    text-align: center;
+    animation: pulse 1s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}

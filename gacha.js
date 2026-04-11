@@ -160,6 +160,13 @@ function addPoints(currChar) {
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
+
+    if(!uid) {
+        alert("You must be logged in to save characters");
+        // Could send them to login page?
+        return;
+    }
+    
     if (currentRolledCharacter) {
         // handle saving the character
         alert(`${currentRolledCharacter.name}" has been added to your collection!`);

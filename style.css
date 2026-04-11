@@ -340,11 +340,19 @@ nav {
 /* =========== ROLL COOLDOWN =========== */
 
 #cooldown-timer {
-  font-size: 14px;
-  color: #dc8c24;
+  background-color: var(--orange);
+  color: var(--cream);
+  border: none;
+  padding: 1rem 5rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  font-family: inherit;
   margin-top: 10px;
   text-align: center;
+  justify-items: center;
   animation: flicker 1s infinite;
+  box-shadow: 6px 2px 12px -4px rgba(0, 0, 0, 0.51);
 }
 
 @keyframes flicker {

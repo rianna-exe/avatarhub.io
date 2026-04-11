@@ -139,7 +139,7 @@ function displayGachaResult(character) {
     
     if (isAvatar) {
         popupContent.innerHTML = `
-        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em; bacground-color: var(--orange);">LEGENDARY</div>
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation}</p>
@@ -151,7 +151,7 @@ function displayGachaResult(character) {
         character.name.includes(rareName)
     )) {
                 popupContent.innerHTML = `
-        <div style="padding: 20px 15px; border-radius: 5px; color: var(--dark-grey); font-family: 'avatar-subfont'; font-size: 1.5em; background-color: var(--yellow);">RARE</div>
+        <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation}</p>

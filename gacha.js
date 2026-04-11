@@ -17,7 +17,7 @@ onAuthStateChanged(auth, async (user) => {
     uid = user.uid;
     const email = user.email;
     const username = await getUsername(uid);
-    document.getElementById("welcome").innerHTML=`Welcome ${username}`;
+    document.getElementById("welcome").innerHTML=`Welcome, ${username}!`;
     console.log(user)
   } else {
     // User is signed out
@@ -98,7 +98,7 @@ gachaOverlay.innerHTML = `
     <div class="spotlight-card">
         <button class="close-btn" onclick="closeGachaPopup(event)">x</button>
         <div id="gacha-popup-content"></div>
-        <button id="save-character-btn" class="save-btn">Save Character</button>
+        <button id="save-character-btn" class="save-btn" style="padding: 10px; background-color: #fcdc7b; color: 1c1c1c; border-radius: 5px; margin: 2px;">Save Character</button>
     </div>
 `;
 document.body.appendChild(gachaOverlay);

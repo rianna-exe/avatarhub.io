@@ -771,4 +771,13 @@ filters{
     cursor: pointer;
 }
 
-
+#inventory-title {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-family: "Protest Revolution", sans-serif;
+    color: var(--brown);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--orange);
+}

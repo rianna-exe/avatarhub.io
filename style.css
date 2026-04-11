@@ -589,6 +589,7 @@ p.redirect, a.credential-redirect {
   color: var(--yellow);
   display: flex;
   position: relative;
+  margin-top: auto;
   bottom: 0;
   width: 100%;
   justify-content: center;
@@ -671,6 +672,26 @@ p.redirect, a.credential-redirect {
     gap: 30px;
     font-size: 20px;
     font-weight: bold;
+}
+
+filters{
+    margin-bottom: 20px;
+}
+
+#affiliation-filter{
+    padding: 8px 12px;
+    font-size: 16px;
+    background-color: #1c1c1c;
+    color: #fcdc7b;
+    border: 2px solid #fcdc7b;
+    border-radius: 10px;
+    margin: 20px;
+}
+
+#affiliation-filter:hover{
+    background-color: var(--orange);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
 }
 
 .arrow {

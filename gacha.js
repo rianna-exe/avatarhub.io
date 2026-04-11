@@ -131,6 +131,24 @@ async function rollRandomCharacter() {
 function displayGachaResult(character) {
     const popupContent = document.getElementById('gacha-popup-content');
     const overlay = document.getElementById('gacha-overlay');
+
+    const isAvatar = avatarNames.some(avatarName => 
+        character.name.includes(avatarName)
+    );
+    
+    if (isAvatar) {
+        alert("LEGENDARY PULL!!");
+    }
+    else if (rareCharacters.some(rareName => 
+        character.name.includes(rareName)
+        
+    )) {
+        alert("RARE PULL!!");
+    }
+    else {
+        alert("Common Character");
+        return 5;
+    }
     
     popupContent.innerHTML = `
         <img src="${character.photoUrl}">
@@ -161,7 +179,7 @@ gachaOverlay.addEventListener('click', function(e) {
 
 // Points system========================
 
-const rareCharacters = ["Azula","Zuko","Katara","Sokka","Toph","Appa","Asami","Kuvira","Lin","Mako","Bolin","Momo"]; 
+const rareCharacters = ["Azula","Zuko","Katara","Sokka","Toph","Appa","Asami","Kuvira","Lin","Mako","Bolin","Momo","Foo"]; 
 
 let avatarNames = []; 
 
@@ -176,7 +194,7 @@ async function loadAvatars() {
     }
 }
 
-loadAvatars();
+await loadAvatars();
 
 function addPoints(currChar) {
     console.log("CURRENT CHAR:", currChar);
@@ -187,7 +205,6 @@ function addPoints(currChar) {
     );
     
     if (isAvatar) {
-        alert("LEGENDARY PULL!!");
         return 20; // Legendary pull!
     }
     // Check if it's a rare character (10 points)
@@ -195,7 +212,6 @@ function addPoints(currChar) {
         currChar.name.includes(rareName)
         
     )) {
-        alert("RARE PULL!!");
         return 10;
     }
     // Regular character (5 points)

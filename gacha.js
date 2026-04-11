@@ -17,25 +17,74 @@ onAuthStateChanged(auth, async (user) => {
     uid = user.uid;
     const email = user.email;
     const username = await getUsername(uid);
-    document.getElementById("welcome").innerHTML=`Welcome, ${username}!`;
+    document.getElementById("welcome").innerHTML=`Welcome ${username}`;
     console.log(user)
   } else {
     // User is signed out
   }
 });
 
-async function getUsername(userid){
-    
-    try{
-        const q = query(collection(db, "users"), where("id", "==", userid));
-        const userSnapshot =  await getDocs(q);
-        const user = userSnapshot.docs.find(doc => doc.data().id === auth.currentUser.uid);
-        console.log(user.data().username)
-        return user.data().username;
-    }catch(error){
+async function fetchDataFromDB(userid) {
+    try {
+        let items = [];
+        const q = query(collection(db, "gachaItems"), where("uid", "==", userid));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            console.log("No gacha items found");
+            return;
+        }
+
+        const invList = document.getElementById("inventory-list");
+        let html = '';
+
+        snapshot.forEach(doc => {
+            items.push(doc.data());
+        });
+
+        for await (const element of items) {
+            let request = await fetch(`https:/last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
+            let response = await request.json();
+            console.log(response)
+
+            html += `
+                <div class="characterpage-card" id="card-${response._id}">
+                <img src="${response.photoUrl}">
+                <p>${response.name}</p>
+                <div class="character-details" id="details-${response._id}"></div>
+                </div>
+            `;
+        }
+
+        invList.innerHTML = html;
+
+    } catch (error) {
         console.error(error);
     }
+}
 
+async function getUsername(userid){
+    try {
+        const q = query(collection(db, "users"), where("id", "==", userid));
+        const snapshot = await getDocs(q);
+
+        if (snapshot.empty) {
+            console.log("No user found");
+            return null;
+        }
+
+        const userDoc = snapshot.docs[0];
+        const userData = userDoc.data();
+
+        console.log(userData.username);
+
+        await fetchDataFromDB(userid);
+
+        return userData.username;
+
+    } catch(error){
+        console.error(error);
+    }
 }
 
 const rollBtn = document.getElementById('roll-btn');
@@ -49,7 +98,7 @@ gachaOverlay.innerHTML = `
     <div class="spotlight-card">
         <button class="close-btn" onclick="closeGachaPopup(event)">x</button>
         <div id="gacha-popup-content"></div>
-        <button id="save-character-btn" class="save-btn" style="padding: 10px; background-color: #fcdc7b; color: 1c1c1c; border-radius: 5px; margin: 2px;">Save Character</button>
+        <button id="save-character-btn" class="save-btn">Save Character</button>
     </div>
 `;
 document.body.appendChild(gachaOverlay);
@@ -81,10 +130,9 @@ function displayGachaResult(character) {
     popupContent.innerHTML = `
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation || "None"}</p>
-        <p><b>Allies:</b> ${character.allies || "None"
-        }</p>
-        <p><b>Enemies:</b> ${character.enemies || "None"} </p>
+        <p><b>Affiliation:</b> ${character.affiliation}</p>
+        <p><b>Allies:</b> ${character.allies}</p>
+        <p><b>Enemies:</b> ${character.enemies}</p>
     `;
     
     overlay.classList.add('active');
@@ -106,61 +154,29 @@ gachaOverlay.addEventListener('click', function(e) {
     }
 });
 
+function addPoints(currChar) {
+    if(currChar.name.includes("Zuko")) return 10;
+    else if(currChar.name.includes("Dee")) return 100;
+    else return 5;
+}
+
 // Save character button functionality
-document.getElementById('save-character-btn').addEventListener('click', async function () {
+document.getElementById('save-character-btn').addEventListener('click', function() {
     if (currentRolledCharacter) {
-
-        const uid = auth.currentUser.uid;
+        // handle saving the character
+        alert(`${currentRolledCharacter.name}" has been added to your collection!`);
+        
+      //  save logic here
         const id = currentRolledCharacter._id;
+        const points = addPoints(currentRolledCharacter);
 
-        alert(`${currentRolledCharacter.name} has been added to your collection!`);
-
-        try {
-            // 1. Save to Firestore
-            await addDoc(collection(db, "gachaItems"), { id, uid });
-
-            // 2. Fetch updated list
-            const items = await fetchListData(uid);
-
-            // 3. Render list
-            await renderList(items);
-
-        } catch (error) {
-            console.error(error);
-        }
-
-        // Close popup
+        addDoc(collection(db, "gachaItems"), { id, points , uid })
+        fetchDataFromDB(uid);
+        
+        // Close the popup after saving
         closeGachaPopup();
     }
 });
-
-async function fetchListData(uid) {
-    const q = query(collection(db, "gachaItems"), where("id", "==", uid));
-    const itemSnapshot = await getDocs(q);
-    const items = itemSnapshot.docs.map(doc => doc.data());
-    console.log(items)
-    return items;
-}
-
-async function renderList(items) {
-    let html = '';
-    const invList = document.getElementById("inventory-list");
-
-    for (const i of items) {
-        try {
-            let request = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${i.characterID}`);
-            let currItem = await request.json();
-
-            html += `
-                <div>${currItem.name}</div>
-            `;
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    invList.innerHTML = html;
-}
 
 // Add click event to the roll button
 rollBtn.addEventListener('click', rollRandomCharacter);

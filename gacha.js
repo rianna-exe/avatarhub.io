@@ -142,9 +142,9 @@ function displayGachaResult(character) {
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     else if (rareCharacters.some(rareName => 
@@ -154,9 +154,9 @@ function displayGachaResult(character) {
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     else {
@@ -164,9 +164,9 @@ function displayGachaResult(character) {
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
         <img src="${character.photoUrl}">
         <h2>${character.name}</h2>
-        <p><b>Affiliation:</b> ${character.affiliation}</p>
-        <p><b>Allies:</b> ${character.allies}</p>
-        <p><b>Enemies:</b> ${character.enemies}</p>
+        <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
+        <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
+        <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
     

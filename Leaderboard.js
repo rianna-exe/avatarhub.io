@@ -3,6 +3,24 @@ import { collection, getDocs, query, where } from "https://www.gstatic.com/fireb
 
 async function loadLeaderboard() {
 
+
+    const tbody = document.querySelector("#leaderboard-table tbody");
+
+    // show spinner
+    tbody.innerHTML = `
+    <tr>
+        <td colspan="4" style="text-align:center; padding:40px;">
+            <div class="leaderboard-loading">
+                <div class="spinner"></div>
+                <p>Loading leaderboard...</p>
+            </div>
+        </td>
+    </tr>
+    `;
+
+    // allow DOM to render spinner
+    await new Promise(resolve => setTimeout(resolve, 300));
+
     try {
 
         const snapshot = await getDocs(collection(db, "gachaItems"));

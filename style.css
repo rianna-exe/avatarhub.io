@@ -177,7 +177,7 @@ nav {
 
 /* =========== MAIN CONTAINER =========== */
 
-.main-desc{
+.main-desc, th.main-content{
   display: flex;
   justify-content: center;
   align-items: center;
@@ -802,6 +802,9 @@ p.redirect, a.credential-redirect {
     border-bottom: 3px solid var(--orange);
 }
 
+/* ===== LEADERBOARD PAGE ===== */
+table{
+  display: table;
 #inventory-list {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));

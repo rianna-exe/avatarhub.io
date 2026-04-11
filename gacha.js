@@ -111,7 +111,7 @@ document.body.appendChild(gachaOverlay);
 // to fetch a random character
 async function rollRandomCharacter() {
     try {
-       const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters?perPage=200');
+       const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters?perPage=300');
         const characters = await response.json();
         
         // Pick a random character from the first 100
@@ -159,19 +159,58 @@ gachaOverlay.addEventListener('click', function(e) {
     }
 });
 
-// Points system
-function addPoints(currChar) {
-    if(currChar.name.includes("Zuko")) return 10;
-    else if(currChar.name.includes("Dee")) return 100;
-    else return 5;
+// Points system========================
+
+const rareCharacters = ["Azula","Zuko","Katara","Sokka","Toph","Appa","Asami","Kuvira","Lin","Mako","Bolin","Momo"]; 
+
+let avatarNames = []; 
+
+async function loadAvatars() {
+    try {
+        const response = await fetch('https://last-airbender-api.fly.dev/api/v1/characters/avatar');
+        const avatars = await response.json();
+        avatarNames = avatars.map(avatar => avatar.name);
+        console.log("Avatars loaded:", avatarNames);
+    } catch(error) {
+        console.error("Failed to load avatars:", error);
+    }
 }
+
+loadAvatars();
+
+function addPoints(currChar) {
+    console.log("CURRENT CHAR:", currChar);
+    
+    // Check if it's an Avatar (20 points)
+    const isAvatar = avatarNames.some(avatarName => 
+        currChar.name.includes(avatarName)
+    );
+    
+    if (isAvatar) {
+        alert("LEGENDARY PULL!!");
+        return 20; // Legendary pull!
+    }
+    // Check if it's a rare character (10 points)
+    else if (rareCharacters.some(rareName => 
+        currChar.name.includes(rareName)
+        
+    )) {
+        alert("RARE PULL!!");
+        return 10;
+    }
+    // Regular character (5 points)
+    else {
+        return 5;
+    }
+}
+
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
 
     if(!uid) {
         alert("You must be logged in to save characters");
-        // Could send them to login page?
+        window.location.href = "Login.html";  //sendthem to log in page
         return;
     }
     
@@ -182,6 +221,7 @@ document.getElementById('save-character-btn').addEventListener('click', function
       //  save logic here
         const id = currentRolledCharacter._id;
         const points = addPoints(currentRolledCharacter);
+        console.log(points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
         fetchDataFromDB(uid);

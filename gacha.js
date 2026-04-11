@@ -49,7 +49,7 @@ async function fetchDataFromDB(userid) {
         });
 
         for await (const element of items) {
-            let request = await fetch(`https:/last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
+            let request = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
             let response = await request.json();
             console.log(response)
 

@@ -219,6 +219,36 @@ function addPoints(currChar) {
     }
 }
 
+//toast function for saving characters
+function toast(characterName,points) {
+    const message = `Saved: ${characterName} (+${points})`;
+
+    console.log(`%c ${message} `, "background: #dc8c24; color: #fbf9df; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
+
+    // Styled on-screen notification (replaces alert)
+    const toastEl = document.createElement("div");
+    toastEl.textContent = message;
+    toastEl.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #dc8c24;
+        color: #fbf9df;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: fadeInOut 2s ease forwards;
+    `;
+
+    document.body.appendChild(toastEl);
+    
+    // Remove after 2 seconds
+    setTimeout(() => toastEl.remove(), 2000);
+}
+
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
@@ -229,14 +259,14 @@ document.getElementById('save-character-btn').addEventListener('click', function
         return;
     }
     
-    if (currentRolledCharacter) {
-        // handle saving the character
-        alert(`${currentRolledCharacter.name}" has been added to your collection!`);
-        
+    if (currentRolledCharacter) { 
       //  save logic here
         const id = currentRolledCharacter._id;
         const points = addPoints(currentRolledCharacter);
         console.log(points);
+
+        //notifying the save
+        toast(`${currentRolledCharacter.name}`, points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
         fetchDataFromDB(uid);

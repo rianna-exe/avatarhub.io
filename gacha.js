@@ -233,6 +233,36 @@ function addPoints(currChar) {
     }
 }
 
+//toast function for saving characters
+function toast(characterName,points) {
+    const message = `Saved: ${characterName} (+${points})`;
+
+    console.log(`%c ${message} `, "background: #dc8c24; color: #fbf9df; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
+
+    //styling toast
+    const toastEl = document.createElement("div");
+    toastEl.textContent = message;
+    toastEl.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #dc8c24;
+        color: #fbf9df;
+        padding: 12px 20px;
+        border-radius: 8px;
+        font-weight: bold;
+        font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: fadeInOut 2s ease forwards;
+    `;
+
+    document.body.appendChild(toastEl);
+    
+    // Remove after 2 seconds
+    setTimeout(() => toastEl.remove(), 2000);
+}
+
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
@@ -243,14 +273,14 @@ document.getElementById('save-character-btn').addEventListener('click', function
         return;
     }
     
-    if (currentRolledCharacter) {
-        // handle saving the character
-        alert(`${currentRolledCharacter.name}" has been added to your collection!`);
-        
+    if (currentRolledCharacter) { 
       //  save logic here
         const id = currentRolledCharacter._id;
         const points = addPoints(currentRolledCharacter);
         console.log(points);
+
+        //notifying the save
+        toast(`${currentRolledCharacter.name}`, points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
         fetchDataFromDB(uid);
@@ -345,6 +375,7 @@ rollBtn.addEventListener('click', handleRollWithLimit);
 async function loadSlides(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph","Zuko", "Korra","Asami","Mako","Bolin"];
     let characterData = [];
+    let rarity = ["LEGENDARY", "RARE"];
 
     carouselContainer.innerHTML = "<h3>Loading...</h3>"
 
@@ -363,7 +394,7 @@ async function loadSlides(){
                 slideCards.push(characterData[0]);
             }
 
-            renderSlides();
+            renderSlides(rarity);
             renderNav();
 
             
@@ -376,10 +407,11 @@ async function loadSlides(){
 
 }
 
-function renderSlides(){
+function renderSlides(rarity){
     let html = "";
     let i = 1;
     for(let character of slideCards){
+        if(character.name.includes("Aang") || character.name.includes("Korra")){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
@@ -391,9 +423,25 @@ function renderSlides(){
                 <p><strong>Allies</strong>: ${character.allies}</p>
                 <p><strong>Enemies</strong>: ${character.enemies}</p>
             </div>
-            <span class="badge">RARE</span>
+            <span class="badge">${rarity[0]}</span>
         </div>
         `
+        }else{
+        html+=`
+        <div id="slide-${i}" class="slide">
+            <div class="slide-image">
+                <img src="${character.photoUrl}">
+            </div>
+            <div class="slide-stats">
+                <h2>${character.name}</h2>
+                <p><strong>Affiliation</strong>: ${character.affiliation}</p>
+                <p><strong>Allies</strong>: ${character.allies}</p>
+                <p><strong>Enemies</strong>: ${character.enemies}</p>
+            </div>
+            <span class="badge">${rarity[1]}</span>
+        </div>
+        `
+        }
         i = i + 1;
     }
     carouselContainer.innerHTML = html;

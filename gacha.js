@@ -239,7 +239,7 @@ function toast(characterName,points) {
 
     console.log(`%c ${message} `, "background: #dc8c24; color: #fbf9df; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
 
-    // Styled on-screen notification (replaces alert)
+    //styling toast
     const toastEl = document.createElement("div");
     toastEl.textContent = message;
     toastEl.style.cssText = `
@@ -375,6 +375,7 @@ rollBtn.addEventListener('click', handleRollWithLimit);
 async function loadSlides(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph","Zuko", "Korra","Asami","Mako","Bolin"];
     let characterData = [];
+    let rarity = ["LEGENDARY", "RARE"];
 
     carouselContainer.innerHTML = "<h3>Loading...</h3>"
 
@@ -393,7 +394,7 @@ async function loadSlides(){
                 slideCards.push(characterData[0]);
             }
 
-            renderSlides();
+            renderSlides(rarity);
             renderNav();
 
             
@@ -406,10 +407,11 @@ async function loadSlides(){
 
 }
 
-function renderSlides(){
+function renderSlides(rarity){
     let html = "";
     let i = 1;
     for(let character of slideCards){
+        if(character.name.includes("Aang") || character.name.includes("Korra")){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
@@ -421,9 +423,25 @@ function renderSlides(){
                 <p><strong>Allies</strong>: ${character.allies}</p>
                 <p><strong>Enemies</strong>: ${character.enemies}</p>
             </div>
-            <span class="badge">RARE</span>
+            <span class="badge">${rarity[0]}</span>
         </div>
         `
+        }else{
+        html+=`
+        <div id="slide-${i}" class="slide">
+            <div class="slide-image">
+                <img src="${character.photoUrl}">
+            </div>
+            <div class="slide-stats">
+                <h2>${character.name}</h2>
+                <p><strong>Affiliation</strong>: ${character.affiliation}</p>
+                <p><strong>Allies</strong>: ${character.allies}</p>
+                <p><strong>Enemies</strong>: ${character.enemies}</p>
+            </div>
+            <span class="badge">${rarity[1]}</span>
+        </div>
+        `
+        }
         i = i + 1;
     }
     carouselContainer.innerHTML = html;

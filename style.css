@@ -6,6 +6,7 @@
   --blue: #7094b7;
   --cream: #fbf9df;
   --grey: #3c3c44;
+  --dark-grey: #1c1c1c;
 }
 
 .protest-revolution-regular {
@@ -655,7 +656,7 @@ a.credential-redirect:hover {
   width: 100%;
   height: 240px;
   border-radius: 20px;
-  background: #1c1c1c;
+  background: var(--dark-grey);
   text-align: center;
   cursor: pointer;
   overflow: hidden;
@@ -707,7 +708,7 @@ a.credential-redirect:hover {
 #affiliation-filter {
   padding: 8px 12px;
   font-size: 16px;
-  background-color: #1c1c1c;
+  background-color: var(--dark-grey);
   color: #fcdc7b;
   border: 2px solid #fcdc7b;
   border-radius: 10px;
@@ -759,7 +760,7 @@ a.credential-redirect:hover {
 }
 
 .spotlight-card {
-  background: #1c1c1c;
+  background: var(--dark-grey);
   border: 2px solid #e6c66d;
   border-radius: 20px;
   padding: 20px;
@@ -831,11 +832,11 @@ a.credential-redirect:hover {
 .leaderboard-container {
   min-width: 50vw;
   margin: 0 auto;
-  background: var(--orange);
+  background: var(--yellow);
   backdrop-filter: blur(8px);
-  border-radius: 2rem;
-  padding: 1.8rem 1.5rem 2rem 1.5rem;
-  box-shadow: 0 20px 35px -12px black, inset 0 1px 0 rgba(255, 255, 240, 0.08);
+  border-radius: 1.5rem;
+  padding: 1rem;
+  box-shadow: 0 20px 35px -12px black, inset 0 1px 0 rgba(255, 255, 240, 0.02);
 }
 
 .leaderboard-header {
@@ -866,37 +867,29 @@ a.credential-redirect:hover {
   border-radius: 1.5rem;
 }
 
-@media (max-width: 768px) {
-  #leaderboard-table td {
-    white-space: normal;
-    /* Allow wrapping on mobile */
-  }
-}
-
 #leaderboard-table {
+  table-layout: fixed;
   width: 100%;
   min-width: 600px;
   border-collapse: collapse;
-  background: var(--blue);
+  background: var(--dark-grey);
   backdrop-filter: blur(8px);
-  border-radius: 1rem;
+  border-radius: 1.1rem;
   overflow: hidden;
   box-shadow: 0 20px 35px -12px black;
-  border: 1px solid var(--blue);
-  min-width: 500 px;
+  border: 1px solid var(--dark-grey);
 }
 
 table, thead, tbody, tr {
   display: table;
   background-image: none;
+  color: var(--cream);
 
 }
 
 #leaderboard-table thead tr {
   background: var(--grey);
   border-bottom: 3px solid var(--yellow);
-  min-width: min-content;
-
 }
 
 #leaderboard-table th {
@@ -905,7 +898,7 @@ table, thead, tbody, tr {
   font-size: 0.95rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  color: #b9f3ff;
+  color: var(--yellow);
   font-family: 'Avatar-subfont', monospace;
   text-align: left;
 }
@@ -915,10 +908,16 @@ table, thead, tbody, tr {
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
   vertical-align: middle;
   white-space: nowrap;
+  font-size: 1rem;
+  color: var(--cream);
+}
+
+#leaderboard-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 #leaderboard-table th h1 {
-  color: #b9f3ff;
+  color: var(--yellow);
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -935,9 +934,8 @@ table, thead, tbody, tr {
 
 /* Top 3 rank glow effect */
 .rank-top-1 {
-  background: radial-gradient(circle at 20% 30%, rgba(255, 215, 0, 0.2), transparent);
   color: #ffd966;
-  text-shadow: 0 0 4px gold;
+  text-shadow: 0 0 6px #ffd70080;
 }
 
 .rank-top-2 {
@@ -946,6 +944,11 @@ table, thead, tbody, tr {
 
 .rank-top-3 {
   color: #cd9f6e;
+}
+
+/* Rank 1 score highlight */
+.rank-top-1 .score-cell {
+  color: #ffd966;
 }
 
 /*Player name */
@@ -964,32 +967,57 @@ table, thead, tbody, tr {
   letter-spacing: 1px;
 }
 
-#leaderboard-table th:nth-child(1),
+/* Rarest pull badge */
+.pull-badge {
+  display: inline-block;
+  background: rgba(255, 217, 102, 0.12);
+  border: 1px solid rgba(255, 217, 102, 0.25);
+  border-radius: 99px;
+  padding: 2px 10px;
+  font-size: 1rem;
+  color: #d4b86a;
+  letter-spacing: 0.3px;
+}
+
 #leaderboard-table td:nth-child(1) {
   width: 80px;
   text-align: center;
 }
 
-#leaderboard-table th:nth-child(2),
 #leaderboard-table td:nth-child(2) {
   width: 150px;
 }
 
-#leaderboard-table th:nth-child(3),
 #leaderboard-table td:nth-child(3) {
-  width: 180px;
+  width: 160px;
 }
 
-#leaderboard-table th:nth-child(4),
 #leaderboard-table td:nth-child(4) {
-  width: 120px;
+  width: 110px;
+  text-align: right;
+}
+#leaderboard-table th:nth-child(1) {
+  width: 12%;
+  text-align: center;
+}
+
+#leaderboard-table th:nth-child(2) {
+  width: 28%;
+}
+
+#leaderboard-table th:nth-child(3) {
+  width: 38%;
+}
+
+#leaderboard-table th:nth-child(4) {
+  width: 22%;
   text-align: right;
 }
 
 /* hover row effect */
 #leaderboard-table tbody tr:hover {
-  background: rgba(0, 224, 255, 0.15);
-  transition: 0.2s;
+  background: #ffd96612;
+  transition: background 0.15s;
   cursor: default;
 }
 
@@ -1015,13 +1043,4 @@ table, thead, tbody, tr {
     opacity: 0.6;
   }
 }
-
-
-
-
-
-
-
-
-
 

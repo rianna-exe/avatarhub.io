@@ -17,7 +17,7 @@ onAuthStateChanged(auth, async (user) => {
     uid = user.uid;
     const email = user.email;
     const username = await getUsername(uid);
-    document.getElementById("welcome").innerHTML=`Welcome ${username}`;
+    document.getElementById("welcome").innerHTML=`Welcome, ${username}!`;
     console.log(user)
   } else {
     // User is signed out

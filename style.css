@@ -830,14 +830,16 @@ a.credential-redirect:hover {
 
 /* ===== LEADERBOARD PAGE ===== */
 .leaderboard-container {
-  min-width: 50vw;
-  margin: 0 auto;
-  background: var(--yellow);
-  backdrop-filter: blur(8px);
-  border-radius: 1.5rem;
-  padding: 1rem;
-  box-shadow: 0 20px 35px -12px black, inset 0 1px 0 rgba(255, 255, 240, 0.02);
-}
+   width: 90%;   
+    max-width: 1200px;   
+    min-width: auto;  
+    margin: 0 auto;
+    background: var(--yellow);
+    backdrop-filter: blur(8px);
+    border-radius: 1.5rem;
+    padding: 1rem;
+    box-shadow: 0 20px 35px -12px black, inset 0 1px 0 rgba(255, 255, 240, 0.02);
+  }
 
 .leaderboard-header {
   display: flex;
@@ -845,7 +847,7 @@ a.credential-redirect:hover {
   align-items: baseline;
   flex-wrap: wrap;
   margin-bottom: 2rem;
-  border-left: 5px solid var(--golden-leaf);
+  border-left: 5px solid var(--orange);
   padding-left: 1.2rem;
 }
 
@@ -856,7 +858,7 @@ a.credential-redirect:hover {
   background: linear-gradient(120deg, #fff2cf, #ffd966);
   background-clip: text;
   -webkit-background-clip: text;
-  color: var(--brown);
+  color: transparent;
   background-image: none;
 }
 
@@ -870,7 +872,7 @@ a.credential-redirect:hover {
 #leaderboard-table {
   table-layout: fixed;
   width: 100%;
-  min-width: 600px;
+  min-width: 500px;
   border-collapse: collapse;
   background: var(--dark-grey);
   backdrop-filter: blur(8px);
@@ -922,13 +924,14 @@ table, thead, tbody, tr {
   margin: 0;
   padding: 0;
   font-weight: inherit;
+  font-weight: inherit;
 }
 
 /* Rank column styling */
 .rank-col {
   font-weight: 800;
   text-align: center;
-  width: 80px;
+  /* width: 80px; */
   font-size: 1.2rem;
 }
 
@@ -974,18 +977,19 @@ table, thead, tbody, tr {
   border: 1px solid rgba(255, 217, 102, 0.25);
   border-radius: 99px;
   padding: 2px 10px;
-  font-size: 1rem;
+  font-size: 0.9rem;
   color: #d4b86a;
   letter-spacing: 0.3px;
+  white-space: nowrap;
 }
 
 #leaderboard-table td:nth-child(1) {
-  width: 80px;
+  min-width: 80px;
   text-align: center;
 }
 
 #leaderboard-table td:nth-child(2) {
-  width: 150px;
+  min-width: 150px;
 }
 
 #leaderboard-table td:nth-child(3) {
@@ -997,20 +1001,19 @@ table, thead, tbody, tr {
   text-align: right;
 }
 #leaderboard-table th:nth-child(1) {
-  width: 12%;
-  text-align: center;
+  min-width: 12%;
 }
 
 #leaderboard-table th:nth-child(2) {
-  width: 28%;
+  min-width: 28%;
 }
 
 #leaderboard-table th:nth-child(3) {
-  width: 38%;
+  min-width: 38%;
 }
 
 #leaderboard-table th:nth-child(4) {
-  width: 22%;
+ min-width: 22%;
   text-align: right;
 }
 
@@ -1020,6 +1023,7 @@ table, thead, tbody, tr {
   transition: background 0.15s;
   cursor: default;
 }
+
 
 /* ------GACHA CSS------ */
 #cooldown-timer {

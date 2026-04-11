@@ -9,6 +9,13 @@ const prevBtn = document.querySelector('.slider-btn:first-child');
 const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
+//rolling variables
+let rollCount = 0;
+let lastRollTime = null;
+let cooldownTimer = null;
+const ROLL_LIMIT = 10;
+const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
+
 let uid; 
 
 onAuthStateChanged(auth, async (user) => {
@@ -42,7 +49,7 @@ async function fetchDataFromDB(userid) {
         });
 
         for await (const element of items) {
-            let request = await fetch(`https:/last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
+            let request = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${element.id}`);
             let response = await request.json();
             console.log(response)
 
@@ -152,6 +159,7 @@ gachaOverlay.addEventListener('click', function(e) {
     }
 });
 
+// Points system
 function addPoints(currChar) {
     if(currChar.name.includes("Zuko")) return 10;
     else if(currChar.name.includes("Dee")) return 100;
@@ -183,8 +191,87 @@ document.getElementById('save-character-btn').addEventListener('click', function
     }
 });
 
+// Modified roll function
+async function handleRollWithLimit() {
+    // Check if user has roll limit in localStorage
+    const savedData = localStorage.getItem(`rollData_${uid}`);
+    
+    if (savedData) {
+        const data = JSON.parse(savedData);
+        rollCount = data.rollCount;
+        lastRollTime = new Date(data.lastRollTime);
+        
+        // Check if cooldown has expired
+        const timeSinceLastRoll = new Date() - lastRollTime;
+        
+        if (rollCount >= ROLL_LIMIT && timeSinceLastRoll < COOLDOWN_MS) {
+            const remainingSeconds = Math.ceil((COOLDOWN_MS - timeSinceLastRoll) / 1000);
+            alert(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
+            startCooldownDisplay(remainingSeconds);
+            return;
+        } else if (timeSinceLastRoll >= COOLDOWN_MS) {
+            // Reset rolls after cooldown
+            rollCount = 0;
+        }
+    }
+    
+    if (rollCount >= ROLL_LIMIT) {
+        alert(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
+        startCooldownDisplay(120);
+        return;
+    }
+    
+    // Perform the roll
+    await rollRandomCharacter();
+    rollCount++;
+    lastRollTime = new Date();
+    
+    // Save to localStorage
+    localStorage.setItem(`rollData_${uid}`, JSON.stringify({
+        rollCount: rollCount,
+        lastRollTime: lastRollTime.toISOString()
+    }));
+    
+    // If reached roll limit, start cooldown
+    if (rollCount >= ROLL_LIMIT) {
+        startCooldownDisplay(120);
+    }
+}
+
+function startCooldownDisplay(remainingSeconds) {
+    const rollBtn = document.getElementById('roll-btn');
+    rollBtn.disabled = true;
+    rollBtn.style.opacity = '0.6';
+    
+    let timerDisplay = document.getElementById('cooldown-timer');
+    if (!timerDisplay) {
+        timerDisplay = document.createElement('div');
+        timerDisplay.id = 'cooldown-timer';
+        timerDisplay.style.marginTop = '10px';
+        rollBtn.parentNode.insertBefore(timerDisplay, rollBtn.nextSibling);
+    }
+    
+    if (cooldownTimer) clearInterval(cooldownTimer);
+    
+    let remaining = remainingSeconds;
+    cooldownTimer = setInterval(() => {
+        remaining--;
+        const minutes = Math.floor(remaining / 60);
+        const seconds = remaining % 60;
+        timerDisplay.textContent = `⏱️ Cooldown: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        
+        if (remaining <= 0) {
+            clearInterval(cooldownTimer);
+            rollBtn.disabled = false;
+            rollBtn.style.opacity = '1';
+            timerDisplay.remove();
+            alert("Cooldown finished! You can roll again!");
+        }
+    }, 1000);
+}
+
 // Add click event to the roll button
-rollBtn.addEventListener('click', rollRandomCharacter);
+rollBtn.addEventListener('click', handleRollWithLimit);
 
 async function loadSlides(){
     let featuredCharacters = ["Aang", "Katara","Sokka","Toph","Zuko", "Korra","Asami","Mako","Bolin"];

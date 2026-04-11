@@ -1,6 +1,6 @@
 import { auth, db } from "./scripts/global.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
-import { collection, getDoc, addDoc, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { collection, getDoc, addDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
 let slideCards = [];
 const carouselContainer = document.getElementById("carousel");
@@ -14,21 +14,19 @@ onAuthStateChanged(auth, async (user) => {
     // User is signed in
     const uid = user.uid;
     const email = user.email;
-    const username = await getUsername();
+    const username = await getUsername(uid);
     document.getElementById("welcome").innerHTML=`Welcome ${username}`;
-
-    console.log(user.uid, user.email)
-    
-
+    console.log(user)
   } else {
     // User is signed out
   }
 });
 
-async function getUsername(){
+async function getUsername(userid){
     
     try{
-        const userSnapshot =  await getDocs(collection(db, "users"));
+        const q = query(collection(db, "users"), where("id", "==", userid));
+        const userSnapshot =  await getDocs(q);
         const user = userSnapshot.docs.find(doc => doc.data().id === auth.currentUser.uid);
         console.log(user.data().username)
         return user.data().username;

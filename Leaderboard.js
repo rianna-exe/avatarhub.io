@@ -1,23 +1,64 @@
 import { db } from "./scripts/global.js";
 import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 const auth = getAuth();
+
+
 //Checking if user is logged in to redirect them when pressing account logo
 let currentUser = null;
 
+const userIcon = document.getElementById("user-icon");
+const authLabel = document.getElementById("auth-label");
+
+// Listen for login state changes
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
+
+  if (user) {
+    // Logged in → show logout label
+    authLabel.textContent = "LOGOUT";
+    authLabel.style.marginLeft = "8px";
+    authLabel.style.fontSize = "16px";
+    authLabel.style.fontWeight = "600";
+    authLabel.style.color = "var(--yellow)";
+    authLabel.style.cursor = "pointer";
+  } else {
+    // Logged out → hide label
+    authLabel.textContent = "";
+  }
 });
 
-document.getElementById("user-icon").addEventListener("click", (e) => {
-  e.preventDefault(); // stop link behavior
+// Click handler
+userIcon.addEventListener("click", async (e) => {
+  e.preventDefault();
 
   if (currentUser) {
-    // logged in → go to inventory
-    window.location.href = "Gacha.html";
+    // LOGOUT
+    try {
+      await signOut(auth);
+      currentUser = null;
+
+      // optional redirect after logout
+      window.location.href = "index.html";
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   } else {
-    // not logged in → go to signup/login
+    // NOT LOGGED IN → go login page
     window.location.href = "SignUp.html";
+  }
+});
+
+authLabel.addEventListener("click", async (e) => {
+  e.preventDefault();
+
+  if (currentUser) {
+    try {
+      await signOut(auth);
+      window.location.href = "index.html";
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   }
 });
 

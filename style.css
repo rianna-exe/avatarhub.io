@@ -1,4 +1,16 @@
 /* =========== GENERAL STUFF =========== */
+
+.user-icon {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.auth-label {
+  transition: opacity 0.2s ease;
+}
+
 :root {
   --orange: #dc8c24;
   --yellow: #fcdc7b;

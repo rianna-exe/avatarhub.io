@@ -1,5 +1,5 @@
 import { auth, db } from "./scripts/global.js";
-import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+import { onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
 import { collection, getDoc, addDoc, getDocs, deleteDoc, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
 
 let slideCards = [];
@@ -10,10 +10,10 @@ const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
 //rolling variables
-let rollCount = 0;
+let rollCount = 1;
 let lastRollTime = null;
 let cooldownTimer = null;
-const ROLL_LIMIT = 10;
+const ROLL_LIMIT = 5;
 const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 
 let uid; 
@@ -21,18 +21,44 @@ let uid;
 //Checking if user is logged in to redirect them when pressing account logo
 let currentUser = null;
 
+const userIcon = document.getElementById("user-icon");
+const authLabel = document.getElementById("auth-label");
+
+// Listen for login state changes
 onAuthStateChanged(auth, (user) => {
   currentUser = user;
+
+  if (user) {
+    // Logged in → show logout label
+    authLabel.textContent = "LOGOUT";
+    authLabel.style.marginLeft = "8px";
+    authLabel.style.fontSize = "16px";
+    authLabel.style.fontWeight = "600";
+    authLabel.style.color = "var(--yellow)";
+    authLabel.style.cursor = "pointer";
+  } else {
+    // Logged out → hide label
+    authLabel.textContent = "";
+  }
 });
 
-document.getElementById("user-icon").addEventListener("click", (e) => {
-  e.preventDefault(); // stop link behavior
+// Click handler
+userIcon.addEventListener("click", async (e) => {
+  e.preventDefault();
 
   if (currentUser) {
-    // logged in → go to inventory
-    window.location.href = "Gacha.html";
+    // LOGOUT
+    try {
+      await signOut(auth);
+      currentUser = null;
+
+      // optional redirect after logout
+      window.location.href = "index.html";
+    } catch (err) {
+      console.error("Logout failed:", err);
+    }
   } else {
-    // not logged in → go to signup/login
+    // NOT LOGGED IN → go login page
     window.location.href = "SignUp.html";
   }
 });
@@ -504,10 +530,19 @@ document.getElementById('save-character-btn').addEventListener('click', function
 async function handleRollWithLimit() {
     // Check if user has roll limit in localStorage
     const savedData = localStorage.getItem(`rollData_${uid}`);
+    const rollBtn = document.getElementById('roll-btn');
+
+        // Make sure button exists
+    if (!rollBtn) {
+        console.error("Roll button not found!");
+        return;
+    }
+
     
     if (savedData) {
         const data = JSON.parse(savedData);
         rollCount = data.rollCount;
+        rollBtn.innerHTML = `Roll (${rollCount})`;
         lastRollTime = new Date(data.lastRollTime);
         
         // Check if cooldown has expired

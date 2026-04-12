@@ -764,6 +764,11 @@ a.credential-redirect {
   font-weight: 550;
 }
 
+p{
+  color: var(--brown);
+
+}
+
 a.credential-redirect:hover {
   color: var(--cream);
 }

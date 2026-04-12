@@ -18,6 +18,96 @@ const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 
 let uid; 
 
+// Spotlight overlay (same as characters page)
+const spotlightOverlay = document.createElement('div');
+spotlightOverlay.id = 'spotlight-overlay';
+spotlightOverlay.className = 'spotlight-overlay';
+spotlightOverlay.innerHTML = `
+    <div class="spotlight-card">
+        <button class="close-btn" onclick="closeSpotlight(event)">×</button>
+        <div id="spotlight-content"></div>
+    </div>
+`;
+document.body.appendChild(spotlightOverlay);
+
+// Close spotlight function
+window.closeSpotlight = function(e) {
+    if (e && e.stopPropagation) {
+        e.stopPropagation();
+    }
+    const overlay = document.getElementById('spotlight-overlay');
+    overlay.classList.remove('active');
+}
+
+// Close spotlight when clicking outside
+spotlightOverlay.addEventListener('click', function(e) {
+    if (e.target === spotlightOverlay) {
+        closeSpotlight();
+    }
+});
+
+// Function to show character spotlight
+async function showCharacterSpotlight(characterId, characterData = null) {
+    try {
+        let character;
+        
+        // If characterData is provided, use it directly
+        if (characterData) {
+            character = characterData;
+        } else {
+            // Otherwise fetch by ID
+            const response = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${characterId}`);
+            character = await response.json();
+        }
+        
+        const spotlightContent = document.getElementById('spotlight-content');
+        
+        // Determine rarity for styling
+        const isAvatar = avatarNames.some(avatarName => 
+            character.name.includes(avatarName)
+        );
+        
+        const isRare = rareCharacters.some(rareName => 
+            character.name.includes(rareName)
+        );
+        
+        let rarityBadge = '';
+        let rarityClass = '';
+        
+        if (isAvatar) {
+            rarityBadge = '<div style="font-family: avatar-subfont; font-size: 1.2rem; color: var(--yellow); margin: 5px;" class="rarity-badge common">LEGENDARY</div>';
+            rarityClass = 'legendary';
+        } else if (isRare) {
+            rarityBadge = '<div style="font-family: avatar-subfont; color: var(--yellow); margin: 5px;" class="rarity-badge common">RARE</div>';
+            rarityClass = 'rare';
+        } else {
+            rarityBadge = '<div style="font-family: avatar-subfont; color: var(--yellow); margin: 5px;" class="rarity-badge common">COMMON</div>';
+            rarityClass = 'common';
+        }
+        
+        spotlightContent.innerHTML = `
+            <div class="spotlight-character ${rarityClass}">
+                ${rarityBadge}
+                <div class="spotlight-image">
+                    <img src="${character.photoUrl || character.image || 'https://via.placeholder.com/300'}" alt="${character.name}">
+                </div>
+                <h2>${character.name}</h2>
+                <div class="spotlight-details">
+                    <p><strong>Affiliation:</strong> ${character.affiliation || "Unknown"}</p>
+                    <p><strong>Allies:</strong> ${(character.allies || []).join(", ") || "None"}</p>
+                    <p><strong>Enemies:</strong> ${(character.enemies || []).join(", ") || "None"}</p>
+                    ${character.position ? `<p><strong>Position:</strong> ${character.position}</p>` : ''}
+                    ${character.nation ? `<p><strong>Nation:</strong> ${character.nation}</p>` : ''}
+                </div>
+            </div>
+        `;
+        
+        spotlightOverlay.classList.add('active');
+    } catch (error) {
+        console.error('Error showing character spotlight:', error);
+    }
+}
+
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     // User is signed in
@@ -39,6 +129,8 @@ async function fetchDataFromDB(userid) {
 
         if (snapshot.empty) {
             console.log("No gacha items found");
+            const invList = document.getElementById("inventory-list");
+            invList.innerHTML = '<p class="no-characters">No characters yet. Try rolling the gacha!</p>';
             return;
         }
         const invList = document.getElementById("inventory-list");
@@ -53,18 +145,58 @@ async function fetchDataFromDB(userid) {
             let response = await request.json();
             console.log(response)
 
+            // Determine rarity for inventory display
+            const isAvatar = avatarNames.some(avatarName => 
+                response.name.includes(avatarName)
+            );
+            
+            const isRare = rareCharacters.some(rareName => 
+                response.name.includes(rareName)
+            );
+            
+            let rarityClass = '';
+            if (isAvatar) rarityClass = 'legendary-card';
+            else if (isRare) rarityClass = 'rare-card';
+            else rarityClass = 'common-card';
+
             html += `
-                <div class="characterpage-card" id="card-${response._id}">
-                <img src="${response.photoUrl}">
-                <p>${response.name}</p>
+                <div class="characterpage-card ${rarityClass}" data-character-id="${response._id}" data-character-name="${response.name}">
+                    <img src="${response.photoUrl}" alt="${response.name}">
+                    <p>${response.name}</p>
                 </div>
             `;
         }
 
         invList.innerHTML = html;
+        
+        // Add click event listeners to all character cards
+        document.querySelectorAll('.characterpage-card').forEach(card => {
+            card.addEventListener('click', async () => {
+                const characterId = card.getAttribute('data-character-id');
+                const characterName = card.getAttribute('data-character-name');
+                
+                // Find the full character data from our fetched items
+                const characterData = await fetchCharacterData(characterId);
+                if (characterData) {
+                    showCharacterSpotlight(characterId, characterData);
+                }
+            });
+        });
 
     } catch (error) {
         console.error(error);
+    }
+}
+
+// Helper function to fetch character data by ID
+async function fetchCharacterData(characterId) {
+    try {
+        const response = await fetch(`https://last-airbender-api.fly.dev/api/v1/characters/${characterId}`);
+        if (!response.ok) throw new Error('Failed to fetch character');
+        return await response.json();
+    } catch (error) {
+        console.error('Error fetching character:', error);
+        return null;
     }
 }
 
@@ -95,7 +227,7 @@ async function getUsername(userid){
 const rollBtn = document.getElementById('roll-btn');
 let currentRolledCharacter = null;
 
-//overlay
+//overlay for gacha result
 const gachaOverlay = document.createElement('div');
 gachaOverlay.id = 'gacha-overlay';
 gachaOverlay.className = 'spotlight-overlay';
@@ -123,7 +255,7 @@ async function rollRandomCharacter() {
         console.log(currentRolledCharacter)
     } catch (error) {
         console.error('Error rolling character:', error);
-        alert('Failed to roll a character. Please try again.');
+        toastGeneral('Failed to roll a character. Please try again.');
     }
 }
 
@@ -135,12 +267,11 @@ function displayGachaResult(character) {
     const isAvatar = avatarNames.some(avatarName => 
         character.name.includes(avatarName)
     );
-
     
     if (isAvatar) {
         popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
-        <img src="${character.photoUrl}">
+        <img src="${character.photoUrl}" alt="${character.name}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -152,7 +283,7 @@ function displayGachaResult(character) {
     )) {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
-        <img src="${character.photoUrl}">
+        <img src="${character.photoUrl}" alt="${character.name}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -162,14 +293,13 @@ function displayGachaResult(character) {
     else {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
-        <img src="${character.photoUrl}">
+        <img src="${character.photoUrl}" alt="${character.name}">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
         <p><b>Enemies:</b> ${(character.enemies || []).join(", ") || "None"}</p>
     `;
     }
-    
     
     overlay.classList.add('active');
 }
@@ -189,6 +319,25 @@ gachaOverlay.addEventListener('click', function(e) {
         closeGachaPopup();
     }
 });
+
+function applyFilter(){
+
+    let select = document.getElementById("affiliation-filter");
+    currentAffiliation = select.value;
+
+    let header = document.getElementById("page-header");
+
+    if(currentAffiliation === ""){
+        header.innerHTML = "All Nations";
+    } else {
+        header.innerHTML = currentAffiliation;
+    }
+
+    currentPage = 1;
+
+    getData();
+
+    }
 
 // Points system========================
 
@@ -234,7 +383,7 @@ function addPoints(currChar) {
 }
 
 //toast function for saving characters
-function toast(characterName,points) {
+function toastSaves(characterName,points) {
     const message = `Saved: ${characterName} (+${points})`;
 
     console.log(`%c ${message} `, "background: #dc8c24; color: #fbf9df; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
@@ -263,12 +412,40 @@ function toast(characterName,points) {
     setTimeout(() => toastEl.remove(), 2000);
 }
 
+//toast function for saving characters
+function toastGeneral(message) {
+    console.log(`%c ${message} `, "background: #3c3c44; color: #fcdc7b; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
+
+    //styling toast
+    const toastEl = document.createElement("div");
+    toastEl.textContent = message;
+    toastEl.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #3c3c44;
+        color: #fcdc7b;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-weight: semi-bold;
+        font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: fadeInOut 2s ease forwards;
+    `;
+
+    document.body.appendChild(toastEl);
+    
+    // Remove after 2 seconds
+    setTimeout(() => toastEl.remove(), 2000);
+}
+
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
 
     if(!uid) {
-        alert("You must be logged in to save characters");
+        toastGeneral("You must be logged in to save characters");
         window.location.href = "Login.html";  //sendthem to log in page
         return;
     }
@@ -280,7 +457,7 @@ document.getElementById('save-character-btn').addEventListener('click', function
         console.log(points);
 
         //notifying the save
-        toast(`${currentRolledCharacter.name}`, points);
+        toastSaves(`${currentRolledCharacter.name}`, points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
         fetchDataFromDB(uid);
@@ -305,7 +482,7 @@ async function handleRollWithLimit() {
         
         if (rollCount >= ROLL_LIMIT && timeSinceLastRoll < COOLDOWN_MS) {
             const remainingSeconds = Math.ceil((COOLDOWN_MS - timeSinceLastRoll) / 1000);
-            alert(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
+            toastGeneral(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
             startCooldownDisplay(remainingSeconds);
             return;
         } else if (timeSinceLastRoll >= COOLDOWN_MS) {
@@ -315,7 +492,7 @@ async function handleRollWithLimit() {
     }
     
     if (rollCount >= ROLL_LIMIT) {
-        alert(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
+        toastGeneral(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
         startCooldownDisplay(120);
         return;
     }
@@ -357,14 +534,14 @@ function startCooldownDisplay(remainingSeconds) {
         remaining--;
         const minutes = Math.floor(remaining / 60);
         const seconds = remaining % 60;
-        timerDisplay.textContent = `⏱️ Cooldown: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        timerDisplay.innerHTML = `Next Roll:<br>${minutes}:${seconds.toString().padStart(2, '0')}`;
         
         if (remaining <= 0) {
             clearInterval(cooldownTimer);
             rollBtn.disabled = false;
             rollBtn.style.opacity = '1';
             timerDisplay.remove();
-            alert("Cooldown finished! You can roll again!");
+            toastGeneral("Cooldown finished! You can roll again!");
         }
     }, 1000);
 }
@@ -415,7 +592,7 @@ function renderSlides(rarity){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
-                <img src="${character.photoUrl}">
+                <img src="${character.photoUrl}" alt="${character.name}">
             </div>
             <div class="slide-stats">
                 <h2>${character.name}</h2>
@@ -430,7 +607,7 @@ function renderSlides(rarity){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
-                <img src="${character.photoUrl}">
+                <img src="${character.photoUrl}" alt="${character.name}">
             </div>
             <div class="slide-stats">
                 <h2>${character.name}</h2>
@@ -445,8 +622,21 @@ function renderSlides(rarity){
         i = i + 1;
     }
     carouselContainer.innerHTML = html;
-    setTimeout(updateActiveNav, 100);
-
+    
+    // Add click event to slides for spotlight
+    setTimeout(() => {
+        const slides = document.querySelectorAll('.slide');
+        slides.forEach((slide, index) => {
+            slide.addEventListener('click', () => {
+                const character = slideCards[index];
+                if (character) {
+                    showCharacterSpotlight(character._id, character);
+                }
+            });
+            slide.style.cursor = 'pointer';
+        });
+        updateActiveNav();
+    }, 100);
 }
 
 function renderNav(){

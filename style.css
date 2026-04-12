@@ -738,6 +738,9 @@ a.credential-redirect:hover {
 
 .characterpage-card:hover {
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-7%);
+  background-color:#3c3c44;
+  transition: all 0.3s ease;
 }
 
 .characterpage-card img {

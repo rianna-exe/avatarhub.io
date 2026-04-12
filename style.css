@@ -1025,11 +1025,11 @@ table, thead, tbody, tr {
 #leaderboard-table th {
   padding: 1rem 1rem;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 1.5rem;
   text-transform: uppercase;
   letter-spacing: 1px;
   color: var(--yellow);
-  font-family: 'Avatar-subfont', monospace;
+  font-family: 'Avatar-subfont';
   justify-content: center;
   text-align: center;
 }
@@ -1050,22 +1050,11 @@ table, thead, tbody, tr {
   border-bottom: none;
 }
 
-#leaderboard-table th h1 {
-  color: var(--yellow);
-  display: inline-block;
-  margin: 0;
-  padding: 0;
-  font-weight: inherit;
-  font-weight: inherit;
-  text-align: center;
-}
-
 /* Rank column styling */
 .rank-col {
   font-weight: 800;
   text-align: center;
   font-size: 1.2rem;
-  justify-content: left;
 }
 
 /* Top 3 rank glow effect */
@@ -1116,38 +1105,29 @@ table, thead, tbody, tr {
   border-radius: 99px;
 }
 
+/* Column Widths */
+#leaderboard-table th:nth-child(1),
 #leaderboard-table td:nth-child(1) {
-  min-width: 200px;
-  text-align: center;
+  min-width: 100px;
+  width: 15%;
 }
 
+#leaderboard-table th:nth-child(2),
 #leaderboard-table td:nth-child(2) {
   min-width: 150px;
+  width: 30%;
 }
 
+#leaderboard-table th:nth-child(3),
 #leaderboard-table td:nth-child(3) {
-  width: 160px;
+  min-width: 180px;
+  width: 40%;
 }
 
+#leaderboard-table th:nth-child(4),
 #leaderboard-table td:nth-child(4) {
-  width: 110px;
-  text-align: right;
-}
-#leaderboard-table th:nth-child(1) {
-  min-width: 12%;
-}
-
-#leaderboard-table th:nth-child(2) {
-  min-width: 28%;
-}
-
-#leaderboard-table th:nth-child(3) {
-  min-width: 38%;
-}
-
-#leaderboard-table th:nth-child(4) {
- min-width: 22%;
-  text-align: right;
+  min-width: 100px;
+  width: 15%;
 }
 
 /* hover row effect */

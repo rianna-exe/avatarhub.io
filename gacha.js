@@ -10,7 +10,7 @@ const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
 //rolling variables
-let rollCount = 1;
+let rollCount = 5;
 let lastRollTime = null;
 let cooldownTimer = null;
 const ROLL_LIMIT = 5;
@@ -548,18 +548,18 @@ async function handleRollWithLimit() {
         // Check if cooldown has expired
         const timeSinceLastRoll = new Date() - lastRollTime;
         
-        if (rollCount >= ROLL_LIMIT && timeSinceLastRoll < COOLDOWN_MS) {
+        if (rollCount <= 0 && timeSinceLastRoll < COOLDOWN_MS) {
             const remainingSeconds = Math.ceil((COOLDOWN_MS - timeSinceLastRoll) / 1000);
             toastGeneral(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
             startCooldownDisplay(remainingSeconds);
             return;
         } else if (timeSinceLastRoll >= COOLDOWN_MS) {
             // Reset rolls after cooldown
-            rollCount = 0;
+            rollCount = 5;
         }
     }
     
-    if (rollCount >= ROLL_LIMIT) {
+    if (rollCount <= 0) {
         toastGeneral(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
         startCooldownDisplay(120);
         return;
@@ -567,7 +567,7 @@ async function handleRollWithLimit() {
     
     // Perform the roll
     await rollRandomCharacter();
-    rollCount++;
+    rollCount--;
     lastRollTime = new Date();
     
     // Save to localStorage

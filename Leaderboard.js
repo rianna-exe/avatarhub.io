@@ -1,5 +1,25 @@
 import { db } from "./scripts/global.js";
 import { collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-firestore.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.10.0/firebase-auth.js";
+const auth = getAuth();
+//Checking if user is logged in to redirect them when pressing account logo
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+});
+
+document.getElementById("user-icon").addEventListener("click", (e) => {
+  e.preventDefault(); // stop link behavior
+
+  if (currentUser) {
+    // logged in → go to inventory
+    window.location.href = "Gacha.html";
+  } else {
+    // not logged in → go to signup/login
+    window.location.href = "SignUp.html";
+  }
+});
 
 async function loadLeaderboard() {
 

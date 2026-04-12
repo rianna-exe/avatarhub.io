@@ -69,7 +69,7 @@ spotlightOverlay.id = 'spotlight-overlay';
 spotlightOverlay.className = 'spotlight-overlay';
 spotlightOverlay.innerHTML = `
     <div class="spotlight-card">
-        <button class="close-btn" onclick="closeSpotlight(event)">×</button>
+        <button class="close-btn" onclick="closeSpotlight(event)" aria-label="close">×</button>
         <div id="spotlight-content"></div>
     </div>
 `;
@@ -134,7 +134,7 @@ async function showCharacterSpotlight(characterId, characterData = null) {
             <div class="spotlight-character ${rarityClass}">
                 ${rarityBadge}
                 <div class="spotlight-image">
-                    <img src="${character.photoUrl || character.image || 'https://via.placeholder.com/300'}" alt="${character.name}">
+                    <img src="${character.photoUrl || character.image || 'https://via.placeholder.com/300'}" alt="${character.name}-img">
                 </div>
                 <h2>${character.name}</h2>
                 <div class="spotlight-details">
@@ -292,7 +292,7 @@ gachaOverlay.id = 'gacha-overlay';
 gachaOverlay.className = 'spotlight-overlay';
 gachaOverlay.innerHTML = `
     <div class="spotlight-card">
-        <button class="close-btn" onclick="closeGachaPopup(event)">x</button>
+        <button class="close-btn" onclick="closeGachaPopup(event)" aria-label="close">x</button>
         <div id="gacha-popup-content"></div>
         <button id="save-character-btn" class="save-btn" style="padding: 10px; background-color: #fcdc7b; color: 1c1c1c; border-radius: 5px; margin: 2px;">Save Character</button>
     </div>
@@ -330,7 +330,7 @@ function displayGachaResult(character) {
     if (isAvatar) {
         popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">LEGENDARY</div>
-        <img src="${character.photoUrl}" alt="${character.name}">
+        <img src="${character.photoUrl}" alt="${character.name}-img">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -342,7 +342,7 @@ function displayGachaResult(character) {
     )) {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">RARE</div>
-        <img src="${character.photoUrl}" alt="${character.name}">
+        <img src="${character.photoUrl}" alt="${character.name}-img">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -352,7 +352,7 @@ function displayGachaResult(character) {
     else {
                 popupContent.innerHTML = `
         <div style="padding: 20px 15px; border-radius: 5px; color: var(--yellow); font-family: 'avatar-subfont'; font-size: 1.5em;">COMMON</div>
-        <img src="${character.photoUrl}" alt="${character.name}">
+        <img src="${character.photoUrl}" alt="${character.name}-img">
         <h2>${character.name}</h2>
         <p><b>Affiliation:</b> ${character.affiliation || "Unknown"}</p>
         <p><b>Allies:</b> ${(character.allies || []).join(", ") || "None"}</p>
@@ -660,7 +660,7 @@ function renderSlides(rarity){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
-                <img src="${character.photoUrl}" alt="${character.name}">
+                <img src="${character.photoUrl}" alt="${character.name}-img">
             </div>
             <div class="slide-stats">
                 <h2>${character.name}</h2>
@@ -675,7 +675,7 @@ function renderSlides(rarity){
         html+=`
         <div id="slide-${i}" class="slide">
             <div class="slide-image">
-                <img src="${character.photoUrl}" alt="${character.name}">
+                <img src="${character.photoUrl}" alt="${character.name}-img">
             </div>
             <div class="slide-stats">
                 <h2>${character.name}</h2>

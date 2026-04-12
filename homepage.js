@@ -39,7 +39,7 @@ function renderCards(){
     for(character of homepageCards){
         html+=`
         <div class = character-card>
-            <img src="${character.photoUrl}">
+            <img src="${character.photoUrl}" aria-label="${character.name}-img">
             <h1 class="character-name">${character.name}</h1>
             <ul>
                     <li>Affiliation: ${character.affiliation}</li>

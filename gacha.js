@@ -10,10 +10,10 @@ const nextBtn = document.querySelector('.slider-btn:last-child');
 const nav = document.getElementById('carousel-nav');
 
 //rolling variables
-let rollCount = 0;
+let rollCount = 1;
 let lastRollTime = null;
 let cooldownTimer = null;
-const ROLL_LIMIT = 10;
+const ROLL_LIMIT = 5;
 const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 
 let uid; 
@@ -504,10 +504,19 @@ document.getElementById('save-character-btn').addEventListener('click', function
 async function handleRollWithLimit() {
     // Check if user has roll limit in localStorage
     const savedData = localStorage.getItem(`rollData_${uid}`);
+    const rollBtn = document.getElementById('roll-btn');
+
+        // Make sure button exists
+    if (!rollBtn) {
+        console.error("Roll button not found!");
+        return;
+    }
+
     
     if (savedData) {
         const data = JSON.parse(savedData);
         rollCount = data.rollCount;
+        rollBtn.innerHTML = `Roll (${rollCount})`;
         lastRollTime = new Date(data.lastRollTime);
         
         // Check if cooldown has expired

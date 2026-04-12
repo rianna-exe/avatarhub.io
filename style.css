@@ -984,6 +984,7 @@ a.credential-redirect:hover {
    align-items: center;
    gap: 10px;
    color: #fcdc7b;
+   margin-top: 20px;
 }
 
 .spinner{

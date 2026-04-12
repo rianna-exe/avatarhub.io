@@ -121,6 +121,7 @@ userIcon.addEventListener("click", async (e) => {
     let perPage = 21;
     let selectedCharacter = null;
     let currentAffiliation = "";
+    let hasNextPage;
 
     function findCharacter(id) {
         for (let c of allCharacters) {
@@ -257,6 +258,14 @@ async function loadAvatars() {
         const result = await fetch(url);
         const data = await result.json();
 
+        if(data.length === 0){
+            hasNextPage = false;
+            currentPage--; 
+            return;
+        } else {
+            hasNextPage = true;
+        }
+
         allCharacters = data;
         
         renderCharacters();
@@ -269,6 +278,7 @@ async function loadAvatars() {
 
     function nextPage(){
 
+        if(!hasNextPage) return;
         currentPage++;
         
         getData();

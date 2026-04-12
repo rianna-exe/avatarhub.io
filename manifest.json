@@ -1,0 +1,65 @@
+{
+  "name": "AvatarHub.io",
+  "short_name": "AvatarHub",
+  "description": "Collect and Summon characters",
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#5c3026",
+  "background_color": "#fbf9df",
+  "icons": [
+    {
+      "src": "/icons/apple-icon-180.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/apple-splash-640-1136.jpg",
+      "sizes": "640x1136",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-750-1334.jpg",
+      "sizes": "750x1334",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-1125-2436.jpg",
+      "sizes": "1125x2436",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-1242-2688.jpg",
+      "sizes": "1242x2688",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-1290-2796.jpg",
+      "sizes": "1290x2796",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-1536-2048.jpg",
+      "sizes": "1536x2048",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-1668-2224.jpg",
+      "sizes": "1668x2224",
+      "type": "image/jpeg",
+      "purpose": "any"
+    },
+    {
+      "src": "/icons/apple-splash-2048-2732.jpg",
+      "sizes": "2048x2732",
+      "type": "image/jpeg",
+      "purpose": "any"
+    }
+  ]
+}

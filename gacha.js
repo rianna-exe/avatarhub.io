@@ -255,7 +255,7 @@ async function rollRandomCharacter() {
         console.log(currentRolledCharacter)
     } catch (error) {
         console.error('Error rolling character:', error);
-        alert('Failed to roll a character. Please try again.');
+        toastGeneral('Failed to roll a character. Please try again.');
     }
 }
 
@@ -383,7 +383,7 @@ function addPoints(currChar) {
 }
 
 //toast function for saving characters
-function toast(characterName,points) {
+function toastSaves(characterName,points) {
     const message = `Saved: ${characterName} (+${points})`;
 
     console.log(`%c ${message} `, "background: #dc8c24; color: #fbf9df; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
@@ -412,12 +412,40 @@ function toast(characterName,points) {
     setTimeout(() => toastEl.remove(), 2000);
 }
 
+//toast function for saving characters
+function toastGeneral(message) {
+    console.log(`%c ${message} `, "background: #3c3c44; color: #fcdc7b; padding: 4px 8px; border-radius: 4px; font-weight: bold;");
+
+    //styling toast
+    const toastEl = document.createElement("div");
+    toastEl.textContent = message;
+    toastEl.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: #3c3c44;
+        color: #fcdc7b;
+        padding: 14px 20px;
+        border-radius: 8px;
+        font-weight: semi-bold;
+        font-family: 'Verdana', 'Segoe UI', Geneva, Tahoma, sans-serif;
+        z-index: 9999;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        animation: fadeInOut 2s ease forwards;
+    `;
+
+    document.body.appendChild(toastEl);
+    
+    // Remove after 2 seconds
+    setTimeout(() => toastEl.remove(), 2000);
+}
+
 
 // Save character button functionality
 document.getElementById('save-character-btn').addEventListener('click', function() {
 
     if(!uid) {
-        alert("You must be logged in to save characters");
+        toastGeneral("You must be logged in to save characters");
         window.location.href = "Login.html";  //sendthem to log in page
         return;
     }
@@ -429,7 +457,7 @@ document.getElementById('save-character-btn').addEventListener('click', function
         console.log(points);
 
         //notifying the save
-        toast(`${currentRolledCharacter.name}`, points);
+        toastSaves(`${currentRolledCharacter.name}`, points);
 
         addDoc(collection(db, "gachaItems"), { id, points , uid })
         fetchDataFromDB(uid);
@@ -454,7 +482,7 @@ async function handleRollWithLimit() {
         
         if (rollCount >= ROLL_LIMIT && timeSinceLastRoll < COOLDOWN_MS) {
             const remainingSeconds = Math.ceil((COOLDOWN_MS - timeSinceLastRoll) / 1000);
-            alert(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
+            toastGeneral(`You've used all ${ROLL_LIMIT} rolls! Please wait ${remainingSeconds} seconds.`);
             startCooldownDisplay(remainingSeconds);
             return;
         } else if (timeSinceLastRoll >= COOLDOWN_MS) {
@@ -464,7 +492,7 @@ async function handleRollWithLimit() {
     }
     
     if (rollCount >= ROLL_LIMIT) {
-        alert(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
+        toastGeneral(`You've reached the maximum of ${ROLL_LIMIT} rolls. Please wait 2 minutes!`);
         startCooldownDisplay(120);
         return;
     }
@@ -506,14 +534,14 @@ function startCooldownDisplay(remainingSeconds) {
         remaining--;
         const minutes = Math.floor(remaining / 60);
         const seconds = remaining % 60;
-        timerDisplay.textContent = ` Cooldown: ${minutes}:${seconds.toString().padStart(2, '0')}`;
+        timerDisplay.innerHTML = `Next Roll:<br>${minutes}:${seconds.toString().padStart(2, '0')}`;
         
         if (remaining <= 0) {
             clearInterval(cooldownTimer);
             rollBtn.disabled = false;
             rollBtn.style.opacity = '1';
             timerDisplay.remove();
-            alert("Cooldown finished! You can roll again!");
+            toastGeneral("Cooldown finished! You can roll again!");
         }
     }, 1000);
 }

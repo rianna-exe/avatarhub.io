@@ -626,16 +626,39 @@ nav {
   max-width: 900px;
   margin: 0 auto;
 }
-.inventory-loading {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: var(--brown);
+/* Add this to handle empty state */
+#inventory-list:has(.no-characters) {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inventory-loading {
+  position: absolute;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: var(--brown);
+}
+
+.no-characters {
+  justify-self: center;
+  background-color: var(--blue);
+  color: var(--grey);
+  border: none;
+  padding: 1rem 2rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: inherit;
+  box-shadow: 6px 2px 12px -4px rgba(0, 0, 0, 0.51);
 }
 /* ====================== LOGIN/SIGNUP PAGE ====================== */
 .main-content {

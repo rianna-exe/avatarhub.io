@@ -123,11 +123,25 @@ onAuthStateChanged(auth, async (user) => {
 
 async function fetchDataFromDB(userid) {
     try {
+
+         const invListLoading = document.getElementById("inventory-list");
+
+        // show spinner immediately
+        invListLoading.innerHTML = `
+            <div class="inventory-loading">
+                <div class="spinner"></div>
+                <p>Loading characters...</p>
+            </div> 
+        `;
+
+        // allow UI to render spinner
+        await new Promise(resolve => setTimeout(resolve, 50));
         let items = [];
         const q = query(collection(db, "gachaItems"), where("uid", "==", userid));
         const snapshot = await getDocs(q);
-
+        
         if (snapshot.empty) {
+            
             console.log("No gacha items found");
             const invList = document.getElementById("inventory-list");
             invList.innerHTML = '<p class="no-characters">No characters yet. Try rolling the gacha!</p>';
@@ -446,7 +460,7 @@ document.getElementById('save-character-btn').addEventListener('click', function
 
     if(!uid) {
         toastGeneral("You must be logged in to save characters");
-        window.location.href = "Login.html";  //sendthem to log in page
+        window.location.href = "LogIn.html";  //sendthem to log in page
         return;
     }
     

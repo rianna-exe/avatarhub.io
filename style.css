@@ -608,13 +608,23 @@ nav {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   justify-content: center;
+  flex:auto;
   gap: 30px;
   padding: 40px 20px;
   max-width: 900px;
   margin: 0 auto;
 }
+.inventory-loading {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #fcdc7b;
+}
 /* ====================== LOGIN/SIGNUP PAGE ====================== */
 .main-content {
   background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.6)), url("https://i.postimg.cc/cC5RYL41/the-legend-of-korra-the-last.webp");
@@ -952,11 +962,16 @@ a.credential-redirect:hover {
 }
 
 .leaderboard-loading{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    gap:10px;
-    color:#fcdc7b;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: 10px;
+   color: #fcdc7b;
 }
 
 .spinner{

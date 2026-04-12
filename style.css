@@ -534,6 +534,32 @@ nav {
     100% { opacity: 0; transform: translateX(100%); }
 }
 
+/* =========== SAVE CHARACTERS =========== */
+.save-btn {
+	box-shadow:inset 0px 0px 15px 3px var(--yellow);
+	background:linear-gradient(to bottom, #fcdc7b 5%, #fcdc7b 100%);
+	background-color:var(--yellow);
+	border-radius:5px;
+	border:1px solid #000000;
+	display:inline-block;
+	cursor:pointer;
+	color:var(--dark-grey);
+	font-family:Verdana;
+	font-size:15px;
+	font-weight:bold;
+	padding:7px 19px;
+	text-decoration:none;
+}
+.save-btn:hover {
+	background:linear-gradient(to bottom, #fcdc7b 5%, #fcd459 100%);
+	background-color:#ffbf00;
+  color: #e68200;
+}
+.save-btn:active {
+	position:relative;
+	top:1px;
+}
+
 /* =========== CAROUSEL - INVENTORY =========== */
 
 
@@ -931,7 +957,6 @@ a.credential-redirect:hover {
   border-radius: 1.1rem;
   overflow: hidden;
   box-shadow: 0 20px 35px -12px black;
-  border: 1px solid var(--dark-grey);
 }
 
 table, thead, tbody, tr {
@@ -941,8 +966,9 @@ table, thead, tbody, tr {
 
 }
 
+
 #leaderboard-table thead tr {
-  background: var(--grey);
+  background: #2b2b2b;
   border-bottom: 3px solid var(--yellow);
 }
 
@@ -964,6 +990,7 @@ table, thead, tbody, tr {
   white-space: nowrap;
   font-size: 1rem;
   color: var(--cream);
+  width: inherit;
 }
 
 #leaderboard-table tbody tr:last-child td {
@@ -977,6 +1004,7 @@ table, thead, tbody, tr {
   padding: 0;
   font-weight: inherit;
   font-weight: inherit;
+  text-align: center;
 }
 
 /* Rank column styling */
@@ -988,22 +1016,26 @@ table, thead, tbody, tr {
 }
 
 /* Top 3 rank glow effect */
-.rank-top-1 {
+.rank-top-1, .rank-1 {
   color: #ffd966;
   text-shadow: 0 0 6px #ffd70080;
+  filter: drop-shadow(0 0 6px rgba(255, 215, 0, 0.5));
+  transition: all 0.3s ease;
+
 }
 
-.rank-top-2 {
+.rank-top-2, .rank-2 {
   color: #c0cfe0;
+  text-shadow: 0 0 6px #c0cfe08e;
+  filter: drop-shadow(0 0 6px #c0cfe08e);
+  transition: all 0.3s ease;
 }
 
-.rank-top-3 {
+.rank-top-3, .rank-3 {
   color: #cd9f6e;
-}
-
-/* Rank 1 score highlight */
-.rank-top-1 .score-cell {
-  color: #ffd966;
+  text-shadow: 0 0 6px #ff840059;
+  filter: drop-shadow(0 0 6px #ff840059);
+  transition: all 0.3s ease;
 }
 
 /*Player name */
@@ -1036,7 +1068,7 @@ table, thead, tbody, tr {
 }
 
 #leaderboard-table td:nth-child(1) {
-  min-width: 80px;
+  min-width: 200px;
   text-align: center;
 }
 

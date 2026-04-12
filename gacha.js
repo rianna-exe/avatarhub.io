@@ -18,6 +18,25 @@ const COOLDOWN_MS = 2 * 60 * 1000; // 2 minutes
 
 let uid; 
 
+//Checking if user is logged in to redirect them when pressing account logo
+let currentUser = null;
+
+onAuthStateChanged(auth, (user) => {
+  currentUser = user;
+});
+
+document.getElementById("user-icon").addEventListener("click", (e) => {
+  e.preventDefault(); // stop link behavior
+
+  if (currentUser) {
+    // logged in → go to inventory
+    window.location.href = "Gacha.html";
+  } else {
+    // not logged in → go to signup/login
+    window.location.href = "SignUp.html";
+  }
+});
+
 // Spotlight overlay (same as characters page)
 const spotlightOverlay = document.createElement('div');
 spotlightOverlay.id = 'spotlight-overlay';

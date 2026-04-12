@@ -930,10 +930,10 @@ a.credential-redirect:hover {
 /* ====================== LEADERBOARD PAGE ====================== */
 .leaderboard-container {
    width: 90%;   
-    max-width: 800px;   
+    max-width: 1200px;   
     min-width: auto;  
     margin: 0 auto;
-    background: var(--yellow);
+    background: var(--brown);
     backdrop-filter: blur(8px);
     border-radius: 1.5rem;
     padding: 1rem;
@@ -999,14 +999,13 @@ a.credential-redirect:hover {
 #leaderboard-table {
   table-layout: auto;
   width: 100%;
-  min-width: auto;
+  min-width: 1000px;
   border-collapse: separate;
   border-spacing: 0 15px;  
   background: var(--dark-grey);
   backdrop-filter: blur(8px);
   border-radius: 1.1rem;
   overflow: hidden;
-  box-shadow: 0 20px 35px -12px black;
 }
 
 table, thead, tbody, tr {
@@ -1014,6 +1013,7 @@ table, thead, tbody, tr {
   background-image: none;
   color: var(--cream);
   justify-self: center;
+  min-width: 1000px;
 }
 
 
@@ -1027,7 +1027,7 @@ table, thead, tbody, tr {
   font-weight: 600;
   font-size: 1.5rem;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
   color: var(--yellow);
   font-family: 'Avatar-subfont';
   justify-content: center;
@@ -1041,6 +1041,8 @@ table, thead, tbody, tr {
   vertical-align: middle;
   white-space: wrap;
   font-size: 1rem;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight:bold;
   color: var(--cream);
   width: inherit;
   text-align: center;
@@ -1099,35 +1101,36 @@ table, thead, tbody, tr {
 
 /* Rarest pull badge */
 .pull-badge {
-  display: inline-block;
-  background: var(--brown);
-  border: none;
-  border-radius: 99px;
+  color: var(--orange);
 }
 
 /* Column Widths */
 #leaderboard-table th:nth-child(1),
 #leaderboard-table td:nth-child(1) {
   min-width: 100px;
-  width: 15%;
+  width: 20%;
 }
 
 #leaderboard-table th:nth-child(2),
 #leaderboard-table td:nth-child(2) {
   min-width: 150px;
-  width: 30%;
+  width: 20%;
 }
 
 #leaderboard-table th:nth-child(3),
 #leaderboard-table td:nth-child(3) {
   min-width: 180px;
-  width: 40%;
+  width: 20%;
+}
+
+#leaderboard-table td:nth-child(3) {
+  color: var(--orange);
 }
 
 #leaderboard-table th:nth-child(4),
 #leaderboard-table td:nth-child(4) {
   min-width: 100px;
-  width: 15%;
+  width: 20%;
 }
 
 /* hover row effect */

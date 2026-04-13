@@ -220,7 +220,7 @@ async function fetchDataFromDB(userid) {
 
             html += `
                 <div class="characterpage-card ${rarityClass}" data-character-id="${response._id}" data-character-name="${response.name}">
-                    <img src="${response.photoUrl}" alt="${response.name}">
+                    <img src="${response.photoUrl}" alt="${response.name}-img">
                     <p>${response.name}</p>
                 </div>
             `;
